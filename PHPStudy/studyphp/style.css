@@ -1,0 +1,10 @@
+﻿.add{width:600px;margin:0px auto;overflow:hidden;}
+.add textarea{width:90%,height:1200px}
+.add .user{float:left}
+.add .btn{float:right}
+
+.msg {width:600px;margin:20px auto;overflow:hidden;}
+
+.item{border :solid 1px #ccc; margin:10px 0;}
+.item .user{float:left}
+.item .time{float:right}
