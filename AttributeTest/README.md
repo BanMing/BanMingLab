@@ -21,20 +21,22 @@
 
 简单的例子如下：
 
-        public class MyAttribute : Attribute
-        {
-        }
+    public class MyAttribute : Attribute
+    {
+    }
 
-        [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-        public class YourAttribute : Attribute
-        {
-        }
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    public class YourAttribute : Attribute
+    {
+    }
+
+这里有一个简单的[例子代码](https://github.com/BanMing/BanMingLab/blob/master/AttributeTest/DeveloperAttribute.cs)。
 
 **AttributeUsageAttribute**
 
 这是我们在编写自己的Attribute的时候可以对我们的Attribute做的一个属性设置。
 
-        [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
 
 可以对自己编写的Attribute的标签做设置。第一个设置该标签可以用于什么位置；第二个设置可以被继承不，默认true；第三个允许同时多个标签，默认true。
 
@@ -42,4 +44,5 @@
 
 我们在写完代码时，就会被翻译成中间语言，然后放在一个可执行的元数据中。Attribute可以让你放一些信息在元数据中，然后使用反射来调用。
 那么我们是不是可以这样想，那我们比较熟悉的unity中自带的Attribute：[MenuItem]来举例子，是不是我们点击我们设置的按键，然后就是使用的反射来调用的。
+暂时写这么多吧，感觉这个平时用的会很少啊，当真真在项目中使用的时候再更新。
 
