@@ -1,4 +1,6 @@
-﻿Shader "BanMing/SecondShader" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "BanMing/SecondShader" {
 	Properties {
 
 	}
@@ -15,7 +17,7 @@
 					float4 vert(float4 v :POSITION) :SV_POSITION{
 						//通过语义告诉系统，我这个参数是干嘛的，比如POSITION是要告诉系统我要的顶点坐标
 						//SV_POSITION这个语义用来解释说明返回值，意思是返回值时剪裁空间下的顶点坐标
-						return mul(UNITY_MATRIX_MVP,v);
+						return UnityObjectToClipPos(v);
 					}
 					
 					fixed4 frag() :SV_Target {

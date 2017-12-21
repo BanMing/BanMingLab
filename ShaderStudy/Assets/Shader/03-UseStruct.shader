@@ -1,4 +1,6 @@
-﻿Shader "BanMing/UseStuct" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "BanMing/UseStuct" {
 	SubShader{
 		Pass{
 				CGPROGRAM
@@ -21,7 +23,7 @@
 
 				v2f vert(a2v v) {
 					v2f f;
-					f.position= mul(UNITY_MATRIX_MVP, v.vertex);
+					f.position= UnityObjectToClipPos(v.vertex);
 					f.temp = v.normal;
 					return f;
 				}

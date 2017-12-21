@@ -1,4 +1,6 @@
-﻿
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+
 Shader "BanMing/DiffuseVertex" {
 	Properties{
 		_Diffuse("Diffuse Color",Color)=(1,1,1,1)
@@ -29,7 +31,7 @@ Shader "BanMing/DiffuseVertex" {
 
 		v2f vert(a2v v){
 			v2f f;			
-			f.position=mul(UNITY_MATRIX_MVP,v.vertex);
+			f.position=UnityObjectToClipPos(v.vertex);
 			//坐标转换可以使用mul()中间带入参数unity_WorldToObject，同时也可以使用UnityObjectToWorldDir这个方法来调用
 			// fixed3 normalDir=normalize(mul(v.normal,(float3x3)unity_WorldToObject));
 			//漫反射公式 ：光照颜色*（cos（法线与光照夹角）） 
@@ -40,7 +42,7 @@ Shader "BanMing/DiffuseVertex" {
 			fixed3 lightDir=normalize(_WorldSpaceLightPos0.xyz);
 			//_LightColor0是光照的颜色
 			fixed3 diffuse =_LightColor0.rgb*max(dot(normalDir,lightDir),0);
-			f.color =diffuse*_Diffuse.rgb;
+			f.color =diffuse*_Diffuse.rgb+ambient;
 			return f;
 		}
 
