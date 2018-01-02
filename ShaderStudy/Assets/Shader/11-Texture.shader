@@ -20,6 +20,8 @@ Shader "BanMing/Texture" {
 			float4 _Color;
 			// float4 _DiffuseColor;
 			sampler2D _MainTex;
+			//固定写法 设置偏移和大小
+			float4  _MainTex_ST;
 			float4 _SpecularColor;
 
 			#include "Lighting.cginc"
@@ -36,7 +38,7 @@ Shader "BanMing/Texture" {
 				float4 position :SV_POSITION;
 				float3 normalDir:TEXCOORD0;
 				float3 viewDir:TEXCOORD1;
-				float4 uv:TEXCOORD2;
+				float2 uv:TEXCOORD2;
 			};
 
 			v2f vert(a2v v){
@@ -44,8 +46,8 @@ Shader "BanMing/Texture" {
 				f.position=UnityObjectToClipPos(v.vertex);
 				f.normalDir=normalize(UnityObjectToWorldDir((float3)v.normal));
 				f.viewDir=normalize(_WorldSpaceCameraPos.xyz-v.vertex);
-				//获得该点的uv信息
-				f.uv=v.texVertex;
+				//获得该点的uv信息并且设置偏移以及大小
+				f.uv=v.texVertex.xy*_MainTex_ST.xy+_MainTex_ST.zw;
 				return f;
 			}
 
