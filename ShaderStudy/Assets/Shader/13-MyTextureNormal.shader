@@ -1,12 +1,11 @@
 ﻿
 Shader "BanMing/My Texture Normal" {
 	Properties{
-		// _DiffuseColor("Diffuse Color",Color)=(1,1,1,1)
 		_Color("Color",Color)=(1,1,1,1)
 		//声明贴图
 		_MainTex("Main Texure",2D)="white"{}
-		// _SpecularColor("Specular Color",Color)=(1,1,1,1)
-		// _Glass("Glass",Range(10,200))=20
+		//bump是在没有设置法线贴图的时候就使用自带的法线
+		_NormalTex("Normal Texure",2D)="bump"{}
 	}
 	SubShader{
 
@@ -16,13 +15,12 @@ Shader "BanMing/My Texture Normal" {
 
 			CGPROGRAM
 
-			// half _Glass;
 			float4 _Color;
-			// float4 _DiffuseColor;
 			sampler2D _MainTex;
 			//固定写法 设置偏移和大小
 			float4  _MainTex_ST;
-			// float4 _SpecularColor;
+			sampler2D _NormalTex;
+			float4 _NormalTex_ST;
 
 			#include "Lighting.cginc"
 			#pragma vertex vert
@@ -30,36 +28,40 @@ Shader "BanMing/My Texture Normal" {
 
 			struct a2v{
 				float4 vertex:POSITION;
+				//切线空间的确定是通过（存储在模型中的）法线与切线确定的
 				fixed3 normal:NORMAL;
+				//tangent.w是来确定切线空间坐标轴的方向
+				float4 tangent:TANGENT;
 				float4 texVertex:TEXCOORD0;
 			};
 
 			struct v2f{
 				float4 position :SV_POSITION;
-				float3 normalDir:TEXCOORD0;
-				// float3 viewDir:TEXCOORD1;
-				float2 uv:TEXCOORD2;
+				float3 lightDir:TEXCOORD0;//切线空间下 平行光的方向
+				float4 uv:TEXCOORD2;//xy用来存储主要的的贴图纹理坐标 zw用来存储法线贴图的纹理坐标
 			};
 
 			v2f vert(a2v v){
 				v2f f;
 				f.position=UnityObjectToClipPos(v.vertex);
-				f.normalDir=normalize(UnityObjectToWorldDir((float3)v.normal));
-				// f.viewDir=normalize(_WorldSpaceCameraPos.xyz-v.vertex);
-				//获得该点的uv信息并且设置偏移以及大小
-				f.uv=v.texVertex.xy*_MainTex_ST.xy+_MainTex_ST.zw;
+				f.uv.xy=v.texVertex.xy*_MainTex_ST.xy+_MainTex_ST.zw;
+				f.uv.zw=v.texVertex.xy*_NormalTex_ST.xy+_NormalTex_ST.zw;
+				TANGENT_SPACE_ROTATION;//这里会得到一个 rotation 是用来把模型空间转化成切线空间
+				f.lightDir=mul(rotation,ObjSpaceLightDir(v.vertex));
 				return f;
 			}
-
+			//跟法线方向有关的运算都要放在切线空间下
+			//从法线贴图里面去的法线方向是切线空间下的
 			fixed4 frag(v2f f):SV_TARGET{
-				fixed3 lightDir=normalize(_WorldSpaceLightPos0.xyz);
-				fixed3 diffuse =_LightColor0.rgb*(dot(f.normalDir,lightDir)*0.5+0.5);
-				//根据uv信息找到对应贴图的像素然后融合颜色
+				fixed3 lightDir=normalize(f.lightDir);
+				//切线空间的法线 
+				fixed4 normalColor= tex2D(_NormalTex,f.uv.zw);
+				// 法线值=2*（法线贴图颜色值-0.5）
+				//颜色的值的范围是[0,1]，法线是向量是需要方向，这里就把[0,1]分界为[0,0.5]与[0.5,1]
+				//跟半兰伯特一样的计算方式
+				fixed3 normalDir= normalize(UnpackNormal(normalColor));
+				fixed3 diffuse =_LightColor0.rgb*(dot(normalDir,lightDir)*0.5+0.5);
 				fixed3 texColor= tex2D(_MainTex,f.uv.xy)*_Color.rgb;
-				// fixed3 reflectDir=normalize(reflect(-lightDir,f.normalDir));
-				// fixed3 halfDir=normalize(f.viewDir+reflectDir);
-				// fixed3 specular=_LightColor0.rgb*pow(max(dot(reflectDir,halfDir),0),_Glass);
-				//这里需要注意的是要把环境光颜色跟贴图颜色融合，这样才不会受环境光影响
 				fixed3 tempColor=diffuse*texColor.rgb+UNITY_LIGHTMODEL_AMBIENT.rgb*texColor;
 				return fixed4(tempColor,1);
 			}

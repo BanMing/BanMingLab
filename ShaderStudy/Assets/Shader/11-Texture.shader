@@ -47,7 +47,8 @@ Shader "BanMing/Texture" {
 				f.normalDir=normalize(UnityObjectToWorldDir((float3)v.normal));
 				f.viewDir=normalize(_WorldSpaceCameraPos.xyz-v.vertex);
 				//获得该点的uv信息并且设置偏移以及大小
-				f.uv=v.texVertex.xy*_MainTex_ST.xy+_MainTex_ST.zw;
+				f.uv=TRANSFORM_TEX(v.texVertex,_MainTex);//第一种写法
+				// f.uv=v.texVertex.xy*_MainTex_ST.xy+_MainTex_ST.zw;第二种写法
 				return f;
 			}
 
