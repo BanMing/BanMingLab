@@ -6,6 +6,8 @@ Shader "BanMing/My Texture Normal" {
 		_MainTex("Main Texure",2D)="white"{}
 		//bump是在没有设置法线贴图的时候就使用自带的法线
 		_NormalTex("Normal Texure",2D)="bump"{}
+		//设置法线效果
+		_BumpScale("BumpScale",Range(0,10))=1
 	}
 	SubShader{
 
@@ -21,6 +23,7 @@ Shader "BanMing/My Texture Normal" {
 			float4  _MainTex_ST;
 			sampler2D _NormalTex;
 			float4 _NormalTex_ST;
+			float _BumpScale;
 
 			#include "Lighting.cginc"
 			#pragma vertex vert
@@ -60,6 +63,8 @@ Shader "BanMing/My Texture Normal" {
 				//颜色的值的范围是[0,1]，法线是向量是需要方向，这里就把[0,1]分界为[0,0.5]与[0.5,1]
 				//跟半兰伯特一样的计算方式
 				fixed3 normalDir= normalize(UnpackNormal(normalColor));
+				//因为z轴是固定该点的法线，并且由公式x^2+y^2+z^2=1的关系来控制
+				normalDir.xy=normalDir.xy*_BumpScale;
 				fixed3 diffuse =_LightColor0.rgb*(dot(normalDir,lightDir)*0.5+0.5);
 				fixed3 texColor= tex2D(_MainTex,f.uv.xy)*_Color.rgb;
 				fixed3 tempColor=diffuse*texColor.rgb+UNITY_LIGHTMODEL_AMBIENT.rgb*texColor;
