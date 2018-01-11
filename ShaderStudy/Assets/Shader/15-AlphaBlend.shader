@@ -8,15 +8,16 @@ Shader "BanMing/Alpha Blend" {
 		_NormalTex("Normal Texure",2D)="bump"{}
 		//设置法线效果
 		_BumpScale("BumpScale",Range(0,10))=1
-		//设置阀值
-		_Cutoff("Alpha Cutoff",Range(0,1))=0.5
+		//设置Alpha
+		_AlphaScale("Alpha Scale",Range(0,1))=1
 	}
 	SubShader{
-		Tags{"Queue"="AlphaTest" "IgnoreProjector"="True" "RenderType"="TransparentCutout"}
+		Tags{"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 		Pass
 		{
 			Tags{"LightMode"="ForwardBase"}
-
+			ZWrite Off
+			Blend SrcAlpha OneMinusSrcAlpha
 			CGPROGRAM
 
 			float4 _Color;
@@ -26,7 +27,7 @@ Shader "BanMing/Alpha Blend" {
 			sampler2D _NormalTex;
 			float4 _NormalTex_ST;
 			float _BumpScale;
-			fixed _Cutoff;
+			fixed _AlphaScale;
 			#include "Lighting.cginc"
 			#pragma vertex vert
 			#pragma fragment frag
@@ -68,12 +69,10 @@ Shader "BanMing/Alpha Blend" {
 				//因为z轴是固定该点的法线，并且由公式x^2+y^2+z^2=1的关系来控制
 				normalDir.xy=normalDir.xy*_BumpScale;
 				fixed3 diffuse =_LightColor0.rgb*(dot(normalDir,lightDir)*0.5+0.5);
-				fixed4 texColor= tex2D(_MainTex,f.uv.xy);\
-				//这里是根据阀值来裁剪值
-				clip(texColor.a-_Cutoff);
+				fixed4 texColor= tex2D(_MainTex,f.uv.xy);
 				fixed3 aldedo=texColor.rgb*_Color.rgb;
 				fixed3 tempColor=diffuse*aldedo+UNITY_LIGHTMODEL_AMBIENT.rgb*aldedo;
-				return fixed4(tempColor,1);
+				return fixed4(tempColor,texColor.a*_AlphaScale);
 			}
 
 			ENDCG
