@@ -1,2 +1,2 @@
 --测试继承
-require("Test/InheritanceTest")
+require "/Test/InheritanceTest"
