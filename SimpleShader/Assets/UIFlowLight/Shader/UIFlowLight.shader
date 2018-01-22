@@ -3,7 +3,7 @@
 	Properties
 	{
 		[PerRendererData]_MainTex ("Texture", 2D) = "white" {}
-		_Color("Tint",Color)=(1,1,1,1)
+		// _Color("Tint",Color)=(1,1,1,1)
 		[MaterialToggle] PixelSnap("Pixel Snap",float)=0
 
 		// FlowLight
@@ -56,7 +56,7 @@
 				half2 texFlowLight :TEXCOORD1;
 			};
 
-			fixed4 _Color;
+			// fixed4 _Color;
 
 			// FLowLight
 			fixed4 _FLowLightColor;
@@ -80,7 +80,7 @@
 				OUT.texFlowLight.x+=_Time * _SpeedX;
 				OUT.texFlowLight.y+=_Time * _SpeedY;
 
-				OUT.color = IN.color*_Color;
+				OUT.color = IN.color;//*_Color;
 				#ifdef PixelSnap_ON
 				OUT.vertex=UnityPixelSnap(OUT.vertex);
 				#endif
