@@ -6,11 +6,11 @@
 		[MaterialToggle] PixelSnap("Pixel Snap",float)=0
 
 		// FlowLight
-		_FLowLightTex("Move Texture",2D)="white"{}
-		_FLowLightColor("FlowLight Color",Color)=(0,0,0,1)
-		_Power("Power",float)=1
-		_SpeedX("SpeedX",float)=1
-		_SpeedY("SpeedY",float)=0
+		_FLowLightTex("Move Texture",2D)="white"{}//扫光贴图
+		_FLowLightColor("FlowLight Color",Color)=(0,0,0,1)//扫光颜色
+		_Power("Power",float)=1//扫光大小
+		_SpeedX("SpeedX",float)=1//X轴移动速度
+		_SpeedY("SpeedY",float)=0//Y轴移动速度
 
 	}
 	SubShader
@@ -92,7 +92,7 @@
 				fixed4 cadd=tex2D(_FLowLightTex,IN.texFlowLight)*_Power*_FLowLightColor;
 				cadd.rgb*=col.rgb;
 				col.rgb +=cadd.rgb;
-				col.rgb *=col.a;
+				// col.rgb *=col.a;
 
 				return col;
 			}
