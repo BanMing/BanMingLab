@@ -3,6 +3,8 @@
 	Properties
 	{
 		[PerRendererData]_MainTex ("Texture", 2D) = "white" {}
+		// _Color("Test Color",Color)=(1,1,1,1)//可用来控制灰度透明度
+		_Power("Power",Range(0,1))=0.5//灰度的亮度
 	}
 	SubShader
 	{
@@ -27,6 +29,9 @@
 			#pragma fragment frag
 			
 			#include "UnityCG.cginc"
+
+			// float4 _Color;
+			fixed _Power;
 
 			struct appdata
 			{
@@ -53,10 +58,12 @@
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				// sample the texture
 				fixed4 col = tex2D(_MainTex, i.uv);
-				fixed gray= dot(col.rgb,fixed3(.222,.707,.071));
+				//计算灰度值
+				fixed gray= dot(col.rgb,fixed3(_Power,_Power,_Power));
+				// fixed gray= dot(col.rgb,_Color.rgb);
 				col.rgb*=col.a;
+				// col.a*=_Color.a;
 				return fixed4(gray,gray,gray,col.a);
 			}
 			ENDCG
