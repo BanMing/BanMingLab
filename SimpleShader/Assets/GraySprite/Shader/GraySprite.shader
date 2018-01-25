@@ -60,9 +60,8 @@
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
 				//计算灰度值
-				//也可以使用固定值来计算fixed3(0.2126，0.7152，0.0722)
+				//也可以使用固定值来计算fixed3(0.299，0.587，0.114)
 				fixed gray= dot(col.rgb,fixed3(_Power,_Power,_Power));
-				// fixed gray= dot(col.rgb,_Color.rgb);
 				col.rgb*=col.a;
 				// col.a*=_Color.a;
 				return fixed4(gray,gray,gray,col.a);
