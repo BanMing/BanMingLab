@@ -3,8 +3,8 @@
 	Properties
 	{
 		[PerRendererData]_MainTex ("Texture", 2D) = "white" {}
-		_R("AlphaDownStartRange",Range(0.1,1))=0.9
-		_L("AlphaDownEndRange",Range(0,0.1))=0.05
+		_AplhaBorder("Aplha Border",Range(1,10))=2
+		_AplhaMask("Aplha Mask",Range(0.01,1))=0.05
 	}
 	SubShader
 	{
@@ -30,8 +30,8 @@
 			
 			#include "UnityCG.cginc"
 			
-			float _R;
-			float _L;
+			float _AplhaBorder;
+			float _AplhaMask;
 
 			struct appdata
 			{
@@ -43,8 +43,8 @@
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
-				fixed4 alphaColor : Color;
-				float x : TEXCOORD1;
+				fixed alphaColor : Color;
+				float x :TEXCOORD1;
 			};
 
 			sampler2D _MainTex;
@@ -56,11 +56,12 @@
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				o.x=o.vertex.x/o.vertex.w;
-
-				// if(o.x<-_R)
-				// 	o.alphaColor= saturate(_L-abs(o.x+_R))/_L;
-				// if(o.x>_R)
-				// 	o.alphaColor= saturate(_L-abs(o.x-_R))/_L;
+				// o.x=o.vertex.w;//白色
+				// if()
+				// if(o.x<-_AplhaBorder)
+				// 	o.alphaColor= saturate(_AplhaMask-abs(o.x+_AplhaBorder))/_AplhaMask;
+				// if(o.x>_AplhaBorder)
+				// 	o.alphaColor= saturate(_AplhaMask-abs(o.x-_AplhaBorder))/_AplhaMask;
 
 				return o;
 			}
@@ -69,11 +70,21 @@
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
 
-				if(i.x<-_R)
-                	col *= saturate(_L-abs(i.x+_R))/_L;
-                if(i.x>_R)
-                	col *= saturate(_L-abs(i.x-_R))/_L;
+				// if(i.vertex.x>-_AplhaBorder)
+                // 	col *= saturate(_AplhaMask-abs(i.vertex.x+_AplhaBorder))/_AplhaMask;
+                // if(i.vertex.x<_AplhaBorder)
+                // 	col *= saturate(_AplhaMask-abs(i.vertex.x-_AplhaBorder))/_AplhaMask;
 
+				// if(i.x<-_AplhaBorder)
+                // 	col *= saturate(_AplhaMask-abs(i.x+_AplhaBorder))/_AplhaMask;
+                // if(i.x>_AplhaBorder)
+                // 	col *= saturate(_AplhaMask-abs(i.x-_AplhaBorder))/_AplhaMask;
+				// col*=i.alphaColor;
+				// return fixed4(i.vertex.w,i.vertex.w,i.vertex.w,1);//白色
+				// return fixed4(i.vertex.x,i.vertex.x,i.vertex.x,1);//白色
+				// return fixed4(i.x,i.x,i.x,1);//黑白渐变
+
+				col *=saturate(saturate(_AplhaMask-abs(i.x))/_AplhaMask*_AplhaBorder);
 				return col;
 			}
 			ENDCG
