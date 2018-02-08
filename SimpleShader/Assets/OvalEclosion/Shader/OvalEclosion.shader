@@ -3,7 +3,7 @@
 	Properties
 	{
 		[PerRendererData]_MainTex ("Texture", 2D) = "white" {}
-		_EclosionScale("Eclosion Scale",Range(0,5))=0//羽化的大小
+		_EclosionScale("Eclosion Scale",Range(0.0000001,5))=0//羽化的大小
 		_PointX("Point X",Range(0,1))=0.5//x坐标
 		_PointY("Point Y",Range(0,1))=0.5//y坐标
 	}
