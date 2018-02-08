@@ -1,4 +1,4 @@
-﻿Shader "BanMing/BorderAplha"
+﻿Shader "BanMing/Border Aplha"
 {
 	Properties
 	{

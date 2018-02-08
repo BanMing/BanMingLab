@@ -1,11 +1,11 @@
-﻿Shader "Unlit/BorderEclosion"
+﻿Shader "Unlit/Oval Eclosion"
 {
 	Properties
 	{
 		[PerRendererData]_MainTex ("Texture", 2D) = "white" {}
-		_EclosionScale("Eclosion Scale",Range(0,5))=0
-		_PointX("Point X",Range(0,1))=0.5
-		_PointY("Point Y",Range(0,1))=0.5
+		_EclosionScale("Eclosion Scale",Range(0,5))=0//羽化的大小
+		_PointX("Point X",Range(0,1))=0.5//x坐标
+		_PointY("Point Y",Range(0,1))=0.5//y坐标
 	}
 	SubShader
 	{
@@ -63,6 +63,7 @@
 			{
 
 				fixed4 col = tex2D(_MainTex, i.uv);
+				//计算点到圆心的距离
 				float dx=i.uv.x-_PointX;
 				float dy=i.uv.y-_PointY;
 				float dstSq=pow(dx,2.0)+pow(dy,2.0);

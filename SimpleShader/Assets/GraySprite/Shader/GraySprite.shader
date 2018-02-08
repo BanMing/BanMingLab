@@ -1,4 +1,4 @@
-﻿Shader "BanMing/GraySprite"
+﻿Shader "BanMing/Gray Sprite"
 {
 	Properties
 	{
