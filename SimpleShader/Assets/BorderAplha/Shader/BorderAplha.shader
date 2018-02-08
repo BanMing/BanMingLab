@@ -43,7 +43,7 @@
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
-				fixed alphaColor : Color;
+				// fixed alphaColor : Color;
 				float x :TEXCOORD1;
 			};
 
