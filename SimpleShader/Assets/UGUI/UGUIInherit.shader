@@ -68,6 +68,7 @@
 				v2f o;
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				//inherit ui shader
 				o.color=v.color;
 				return o;
 			}
