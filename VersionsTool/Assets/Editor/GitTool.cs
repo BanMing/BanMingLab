@@ -16,17 +16,17 @@ public class GitTool {
     [MenuItem ("GitTool/Git Update ")]
     static void UpdateFromGit () {
         if (string.IsNullOrEmpty(gitProcPath))
-            gitProcPath = GetgitProcPath();
+            gitProcPath = GetGitProcPath();
         var dir = new DirectoryInfo(Application.dataPath);
         var path = dir.Parent.FullName.Replace('/', '\\');
-        var para = "/command:update /path:\"" + path + "\" /closeonend:0";
-        System.Diagnostics.Process.Start (gitProcPath, para);
+        var para = "/command:pull /path:\"" + path + "\" /closeonend:0";
+        System.Diagnostics.Process.Start(gitProcPath, para);
 }
 
 [MenuItem ("GitTool/Git Commit")]
 static void CommitToGit () {
     if (string.IsNullOrEmpty (gitProcPath))
-        gitProcPath = GetgitProcPath ();
+        gitProcPath = GetGitProcPath ();
     var path = Application.dataPath.Replace ('/', '\\');
     var para = "/command:commit /path:\"" + path + "\"";
     System.Diagnostics.Process.Start (gitProcPath, para);
@@ -35,7 +35,7 @@ static void CommitToGit () {
 [MenuItem ("GitTool/Git Revert")]
 static void RevertFromGit () {
     if (string.IsNullOrEmpty (gitProcPath))
-        gitProcPath = GetgitProcPath ();
+        gitProcPath = GetGitProcPath ();
     var path = Application.dataPath.Replace ('/', '\\');
     var para = "/command:revert /path:\"" + path + "\"";
     System.Diagnostics.Process.Start (gitProcPath, para);
@@ -44,7 +44,7 @@ static void RevertFromGit () {
 [MenuItem ("GitTool/Git Add")]
 static void AddToGit () {
     if (string.IsNullOrEmpty (gitProcPath))
-        gitProcPath = GetgitProcPath ();
+        gitProcPath = GetGitProcPath ();
     var path = Application.dataPath.Replace ('/', '\\');
     var para = "/command:add /path:\"" + path + "\"";
     System.Diagnostics.Process.Start (gitProcPath, para);
@@ -53,12 +53,12 @@ static void AddToGit () {
 [MenuItem ("GitTool/Git ClearUp")]
 static void ClearUpFromGit () {
     if (string.IsNullOrEmpty (gitProcPath))
-        gitProcPath = GetgitProcPath ();
+        gitProcPath = GetGitProcPath ();
     var path = Application.dataPath.Replace ('/', '\\');
     var para = "/command:cleanup /path:\"" + path + "\"";
     System.Diagnostics.Process.Start (gitProcPath, para);
 }
-private static string GetgitProcPath () {
+private static string GetGitProcPath () {
     foreach (var item in drives) {
         var path = string.Concat (item, gitPath, gitProc);
         if (File.Exists (path))
