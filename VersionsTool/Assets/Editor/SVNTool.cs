@@ -17,7 +17,7 @@ public class SVNTool
     private static string svnProc = @"TortoiseProc.exe";
     private static string svnProcPath = "";
 
-    [MenuItem("SVNTool/SVN更新 %&e")]
+    [MenuItem("SVNTool/SVN Update %&e")]
     public static void UpdateFromSVN()
     {
         if (string.IsNullOrEmpty(svnProcPath))
@@ -28,7 +28,7 @@ public class SVNTool
         System.Diagnostics.Process.Start(svnProcPath, para);
     }
 
-    [MenuItem("SVNTool/SVN提交 %&r")]
+    [MenuItem("SVNTool/SVN Commit %&r")]
     public static void CommitToSVN()
     {
         if (string.IsNullOrEmpty(svnProcPath))
@@ -38,7 +38,7 @@ public class SVNTool
         System.Diagnostics.Process.Start(svnProcPath, para);
     }
 
-    [MenuItem("SVNTool/回滚本地修改（更新时看到红色字请点我！） %&t")]
+    [MenuItem("SVNTool/SVN Revert %&t")]
     public static void RevertFromSVN()
     {
         if (string.IsNullOrEmpty(svnProcPath))
@@ -49,7 +49,7 @@ public class SVNTool
     }
 
 
-    [MenuItem("SVNTool/SVN添加 %&u")]
+    [MenuItem("SVNTool/SVN Add %&u")]
     public static void AddToSVN()
     {
         if (string.IsNullOrEmpty(svnProcPath))
@@ -59,7 +59,7 @@ public class SVNTool
         System.Diagnostics.Process.Start(svnProcPath, para);
     }
 
-    [MenuItem("SVNTool/清理SVN %&y")]
+    [MenuItem("SVNTool/CleanUp SVN %&y")]
     public static void CleanUpFromSVN()
     {
         if (string.IsNullOrEmpty(svnProcPath))
@@ -67,27 +67,6 @@ public class SVNTool
         var path = Application.dataPath.Replace('/', '\\');
         var para = "/command:cleanup /path:\"" + path + "\"";
         System.Diagnostics.Process.Start(svnProcPath, para);
-    }
-
-    [MenuItem("SVNTool/获取SVN Info")]
-    public static string GetSVNInfo()
-    {
-        string info;
-        // string rootPath = MyFileUtil.GetParentDir(Application.dataPath);
-        // var output = CMDTool.ProcessCommand("svn", "info " + rootPath);
-        // return output;
-        return "output";
-    }
-
-    [MenuItem("SVNTool/获取SVN Version")]
-    public static string GetSVNRevision()
-    {
-        string RevisionRegexStr = @"Last\sChanged\sRev\:\s(.+)\n";
-        string info = GetSVNInfo();
-        Match match = Regex.Match(info, RevisionRegexStr);
-        string version = match.Groups[1].Value;
-        version = version.Replace("\r", "");
-        return version;
     }
 
     private static string GetSvnProcPath()
