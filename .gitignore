@@ -1,0 +1,9 @@
+*.meta
+*.csproj
+*.sln
+
+*/.vscode
+*/Library
+*/obj
+*/Temp
+*/UnityPackageManager
