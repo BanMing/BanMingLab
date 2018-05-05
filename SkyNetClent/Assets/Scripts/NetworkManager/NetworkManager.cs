@@ -66,6 +66,7 @@ namespace NetFramework
         /// </summary>
         public void SendConnect(string host, int port)
         {
+            Debug.Log("Start Connect Server ip:"+host+"port:"+port);
             CEncryptClient.instance.Reset();
             SocketClient.SendConnect(host, port);
         }
