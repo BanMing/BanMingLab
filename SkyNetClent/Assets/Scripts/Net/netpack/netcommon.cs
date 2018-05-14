@@ -32,21 +32,11 @@ namespace netpack
                     Debug.Log("NetFramework.Protocal.Connect ConnectFail");
                 }
             }
-            else //
+            else 
             {
-                UnityEngine.Debug.Log(string.Format("netcommonHandle: {0} {1} {2}", bigid, smallid, buff));
-                // if (smallid == 1)
-                // {
-                //     C2SLoginTest();
-                // }
-                // else if (smallid == 2)
-                // {
-                //     var data = Protocol.S2CLoginSuccess.ParseFrom(buff);
-                //     Debug.Log("data:" + data.Name);
-                // }
+                UnityEngine.Debug.Log(string.Format("netcommonHandle: {0} {1}", bigid, smallid));
                 //分发到lua层
                 LuaInterface.LuaByteBuffer luaByteBuffer =new LuaInterface.LuaByteBuffer(buff);
-                // NetFramework.ByteBuffer buffer =new  NetFramework.ByteBuffer(buff);
                 NetFramework.NetworkManager.DispatchSocketMsg(bigid, smallid, luaByteBuffer);
             }
 
