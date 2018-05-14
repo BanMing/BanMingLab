@@ -3,6 +3,6 @@ using LuaInterface;
 
 public static class TestProtol
 {
-    [LuaByteBufferAttribute]
+    // [LuaByteBufferAttribute]
     public static byte[] data; 
 }

@@ -71,12 +71,28 @@ public class NetFramework_NetworkManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 3);
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
-			int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
-			byte[] arg2 = ToLua.CheckByteBuffer(L, 3);
-			NetFramework.NetworkManager.DispatchSocketMsg(arg0, arg1, arg2);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 3 && TypeChecker.CheckTypes<LuaInterface.LuaByteBuffer>(L, 3))
+			{
+				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+				int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+				LuaByteBuffer arg2 = new LuaByteBuffer(ToLua.CheckByteBuffer(L, 3));
+				NetFramework.NetworkManager.DispatchSocketMsg(arg0, arg1, arg2);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<byte[]>(L, 3))
+			{
+				int arg0 = (int)LuaDLL.luaL_checknumber(L, 1);
+				int arg1 = (int)LuaDLL.luaL_checknumber(L, 2);
+				byte[] arg2 = ToLua.CheckByteBuffer(L, 3);
+				NetFramework.NetworkManager.DispatchSocketMsg(arg0, arg1, arg2);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NetFramework.NetworkManager.DispatchSocketMsg");
+			}
 		}
 		catch (Exception e)
 		{

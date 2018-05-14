@@ -45,7 +45,9 @@ namespace netpack
                 //     Debug.Log("data:" + data.Name);
                 // }
                 //分发到lua层
-                NetFramework.NetworkManager.DispatchSocketMsg(bigid, smallid, buff);
+                LuaInterface.LuaByteBuffer luaByteBuffer =new LuaInterface.LuaByteBuffer(buff);
+                // NetFramework.ByteBuffer buffer =new  NetFramework.ByteBuffer(buff);
+                NetFramework.NetworkManager.DispatchSocketMsg(bigid, smallid, luaByteBuffer);
             }
 
         }

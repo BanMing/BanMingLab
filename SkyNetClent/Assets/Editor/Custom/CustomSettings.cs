@@ -148,6 +148,7 @@ public static class CustomSettings
         _GT(typeof(LuaProfiler)),
         _GT(typeof(NetFramework.NetworkManager)),  
         _GT(typeof(TestStart)),  
+        _GT(typeof(NetFramework.ByteBuffer)),  
     };
 
     public static List<Type> dynamicList = new List<Type>()

@@ -70,6 +70,7 @@ public static class LuaBinder
 		L.EndModule();
 		L.BeginModule("NetFramework");
 		NetFramework_NetworkManagerWrap.Register(L);
+		NetFramework_ByteBufferWrap.Register(L);
 		L.EndModule();
 		L.BeginModule("System");
 		L.RegFunction("Action", System_Action);

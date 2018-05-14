@@ -25,9 +25,18 @@ namespace NetFramework
         {
             if (DispatchSocketMsgAction != null)
             {
-                DispatchSocketMsgAction.Call( bigid,  smallid,buff);
+                DispatchSocketMsgAction.Call( bigid,smallid,buff);
             }
         }
+
+        static public void DispatchSocketMsg(int bigid, int smallid, LuaInterface.LuaByteBuffer buff)
+        {
+            if (DispatchSocketMsgAction != null)
+            {
+                DispatchSocketMsgAction.Call( bigid,smallid,buff);
+            }
+        }
+
         public NetworkManager()
         {
             SocketClient.OnRegister();

@@ -2,7 +2,7 @@ require("Net/MsgId")
 MsgHandler = {}
 local handler
 function MsgHandler.DispatchMsg(bigId, smallId, buffer)
-    print("Lua Get Msg BigId:", bigId, "smallId:", smallId)
+    print("Lua Get Msg BigId:", bigId, "smallId:", smallId,"buffer:",buffer)
     --    local = BigMsg[bigId]
     --    print("funcName:",funcName)
     --    if bigId==BigMsgId.Login then
