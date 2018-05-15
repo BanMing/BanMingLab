@@ -1,17 +1,11 @@
-require("Net/MsgId")
 MsgHandler = {}
-local handler
 function MsgHandler.DispatchMsg(bigId, smallId, buffer)
-    print("Lua Get Msg BigId:", bigId, "smallId:", smallId,"buffer:",buffer)
-    --    local = BigMsg[bigId]
-    --    print("funcName:",funcName)
-    --    if bigId==BigMsgId.Login then
-    --        LoginMsgHandler:OnMessage(smallId,buffer)
-    --    end
-
+    print("Lua Get Msg BigId:", bigId, "smallId:", smallId)
+    local handler = BigMsgHandler[bigId]
     if handler == nil then
-        handler = LoginMsgHandler:new()
+        print("handler is NULL!")
     end
-
     handler:OnMessage(smallId, buffer)
 end
+BigMsgId = {}
+BigMsgHandler = {}

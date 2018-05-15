@@ -1,6 +1,6 @@
 
-class=require("Assets.Lua.middleclass")
-require("Net/MsgHandler")
+class=require("middleclass")
+require("Net/MsgHandlerHead")
 --主入口函数。从这里开始lua逻辑
 function Main()
     print("logic start")

@@ -41,18 +41,5 @@ namespace netpack
             }
 
         }
-
-        public static void C2SLoginTest()
-        {
-            Protocol.C2SLogin.Builder tem = new Protocol.C2SLogin.Builder();
-            tem.Account = "test1";
-            tem.Pwd = "pwd";
-            tem.Servernumber = 1;
-            tem.Mac = "mac";
-            byte[] buffer = tem.Build().ToByteArray();
-
-            TestStart.networkManager.SendMessage(1, 1, buffer);
-            UnityEngine.Debug.Log(string.Format("---C2SLogin--Account:{0} {1}-", tem.Account, tem.Pwd));
-        }
     }
 }
