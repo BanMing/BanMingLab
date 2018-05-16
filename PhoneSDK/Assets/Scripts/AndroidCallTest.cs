@@ -4,33 +4,32 @@ using UnityEngine;
 
 public class AndroidCallTest : MonoBehaviour
 {
+    private float level = 0;
+    private int current=0;
+    private int total=0;
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
+#if    UNITY_ANDROID
     void OnGUI()
     {
-       if (GUILayout.Button("Open WeChat"))
-       {
-           OpenInstalledApp("com.tencent.mm");
-       } 
+        if (GUILayout.Button("Open WeChat"))
+        {
+            OpenInstalledApp("com.tencent.mm");
+        }
+        if (GUILayout.Button("Get Batter Level"))
+        {
+            level = GetBatterLevel();
+
+        }
+        GUILayout.Label("Level:" + level);
+        GUILayout.Label("current:" + current);
+        GUILayout.Label("total:" + total);
     }
     /// <summary>
     /// 通过包名打开已安装的应用，若未安装则产生异常
     /// </summary>
     /// <param name="PKName">包名</param>
     /// <returns>bool</returns>
-    public  bool OpenInstalledApp(string PKName)
+    public bool OpenInstalledApp(string PKName)
     {
         if (string.IsNullOrEmpty(PKName))
         {
@@ -55,19 +54,32 @@ public class AndroidCallTest : MonoBehaviour
         }
     }
 
-    // /// <summary>
-    // /// 打开已安装的app（暂时通过打开appStore再打开app）
-    // /// </summary>
-    // /// <param name="url">app的appstore地址</param>
-    // /// <returns>bool</returns>
-    // public static bool OpenInstalledApp(string url){
-    //     if (string.IsNullOrEmpty(url))
-    //     {
-    //         Debug.Log("url is empty");
-    //         return false;
-    //     }
-    //     string appUrl = url.Replace("https://", "itms-apps://");
-    //     Application.OpenURL(appUrl);
-    //     return true;
-    // }
+    public int GetBatterLevel()
+    {
+        AndroidJavaClass Player = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject Activity = Player.GetStatic<AndroidJavaObject>("currentActivity");
+
+        AndroidJavaObject it = new AndroidJavaObject("android.content.Intent");
+        var getExtras = it.Call<AndroidJavaObject>("getExtras");
+        var getInt = getExtras.Call<AndroidJavaObject>("getInt");
+        current = getInt.Call<int>("level");
+        total = getInt.Call<int>("scale");
+
+        return current/total;
+    }
+
+    public int GetBatterLevelTemp()
+    {
+        AndroidJavaClass Player = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject Activity = Player.GetStatic<AndroidJavaObject>("currentActivity");
+
+        AndroidJavaObject it = new AndroidJavaObject("android.content.Intent");
+        var getExtras = it.Call<AndroidJavaObject>("getExtras");
+        var getInt = getExtras.Call<AndroidJavaObject>("getInt");
+        current = getInt.Call<int>("level");
+        total = getInt.Call<int>("scale");
+        
+        return current/total;
+    }
+#endif
 }
