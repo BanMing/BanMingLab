@@ -20,6 +20,6 @@ function LoginMsgHandler:SendLogin()
     msg.servernumber = 33
     msg.mac = "mac"
     local data = msg:SerializeToString()
-    TestStart.networkManager:SendMessage(1, 1, data)
+    TestStart.networkManager:SendMessage(BigMsgId.Login,LoginMsgHandler.C2SMsgId.SendLogin, data)
 end
 
