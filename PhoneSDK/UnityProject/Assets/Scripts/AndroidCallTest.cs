@@ -35,7 +35,7 @@ public class AndroidCallTest : MonoBehaviour
             if (androidHelper == null)
             {
                 AndroidJavaClass Helper = new AndroidJavaClass("com.banming.phonesdk.AndroidHelper");
-                androidHelper = Helper.GetStatic<AndroidJavaObject>("Instance");
+                androidHelper = Helper.CallStatic<AndroidJavaObject>("Instance");
             }
             return androidHelper;
         }
