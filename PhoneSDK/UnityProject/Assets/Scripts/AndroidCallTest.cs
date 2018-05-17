@@ -8,6 +8,7 @@ public class AndroidCallTest : MonoBehaviour
     private int current = 0;
     private int total = 0;
     private AndroidJavaObject activity;
+    private AndroidJavaObject androidHelper;
 #if  UNITY_ANDROID
     void OnGUI()
     {
@@ -25,6 +26,18 @@ public class AndroidCallTest : MonoBehaviour
                 activity = Player.GetStatic<AndroidJavaObject>("currentActivity");
             }
             return activity;
+        }
+    }
+    private AndroidJavaObject AndroidHelper
+    {
+        get
+        {
+            if (androidHelper == null)
+            {
+                AndroidJavaClass Helper = new AndroidJavaClass("com.banming.phonesdk.AndroidHelper");
+                androidHelper = Helper.GetStatic<AndroidJavaObject>("Instance");
+            }
+            return androidHelper;
         }
     }
     /// <summary>
@@ -67,6 +80,31 @@ public class AndroidCallTest : MonoBehaviour
     {
         Activity.Call("ShareText", message, body);
     }
+
+    public void OpenOtherAppHelper(string PKName)
+    {
+
+        AndroidHelper.Call("CallThirdApp", Activity,PKName);
+    }
+    public void CreateToastHelper(string PKName)
+    {
+        AndroidHelper.Call("CreateToast", Activity,PKName);
+    }
+    public void HelperAdd(){
+        current=AndroidHelper.Call<int>("TestAdd", 9,8);
+    }
+     public void HelperStaticAdd(){
+         AndroidJavaClass Helper = new AndroidJavaClass("com.banming.phonesdk.AndroidHelper");
+        total=Helper.CallStatic<int>("TestStaticAdd", 2,8);
+    }
+    public void HelperStaticOpenWeChat(){
+         AndroidJavaClass Helper = new AndroidJavaClass("com.banming.phonesdk.AndroidHelper");
+        Helper.CallStatic("CallThirdApp",Activity, "com.tencent.mm");
+    }
+    public void HelperStaticToast(){
+         AndroidJavaClass Helper = new AndroidJavaClass("com.banming.phonesdk.AndroidHelper");
+        Helper.CallStatic("CreateToastStatic",Activity, "Helper Static Toast!");
+    }
 #else
   public void OpenOtherApp(string PKName)
     {
@@ -81,6 +119,25 @@ public class AndroidCallTest : MonoBehaviour
     }
     public void ShareText(string message, string body)
     {
+
+    }
+       public void OpenOtherAppHelper(string PKName)
+    {
+
+
+    }
+    public void CreateToastHelper(string PKName)
+    {
+
+    }
+    public void HelperAdd(){
+    }
+     public void HelperStaticAdd(){
+    }
+     public void HelperStaticOpenWeChat(){
+
+    }
+    public void HelperStaticToast(){
 
     }
 #endif

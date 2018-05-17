@@ -1,5 +1,6 @@
 package com.banming.phonesdk;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -34,4 +35,5 @@ public class MyActivity extends UnityPlayerActivity {
         Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
         startActivity(intent);
     }
+
 }
