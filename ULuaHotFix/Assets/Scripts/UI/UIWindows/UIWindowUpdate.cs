@@ -27,13 +27,16 @@ public class UIWindowUpdate : SingletonGameObject<UIWindowUpdate>
         // m_Text.text="正在检查更新";
     }
 
-    //------------------------------------------------------------------------//
-
-
-    // Update is called once per frame
-    void Update ()
+    static public void Show()
     {
-        if(m_WWW != null && string.IsNullOrEmpty(m_WWW.error) == true)
+        if (m_Instance != null)
+        {
+            MyUnityTool.SetActive(Instance.transform, true);
+        }
+    }
+    void Update()
+    {
+        if (m_WWW != null && string.IsNullOrEmpty(m_WWW.error) == true)
         {
             string downloaded = (m_CurSize * m_WWW.progress * 1.0 / 1024 / 1024).ToString("N2");
             string total = (m_CurSize * 1.0 / 1024 / 1024).ToString("N2");
@@ -73,7 +76,7 @@ public class UIWindowUpdate : SingletonGameObject<UIWindowUpdate>
 
     static public void Close()
     {
-        if(m_Instance != null)
+        if (m_Instance != null)
         {
             Destroy(Instance.gameObject);
         }

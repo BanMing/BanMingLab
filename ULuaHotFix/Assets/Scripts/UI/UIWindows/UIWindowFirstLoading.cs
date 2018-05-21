@@ -99,7 +99,10 @@ public class UIWindowFirstLoading : SingletonGameObject<UIWindowFirstLoading>
         if (m_Instance != null)
         {
             MyUnityTool.SetActive(Instance.transform, true);
+        }else{
+            
         }
+
     }
 
     static public void Hide()

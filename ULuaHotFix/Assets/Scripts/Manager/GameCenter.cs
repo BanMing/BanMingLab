@@ -51,9 +51,9 @@ public class GameCenter : MonoBehaviour
             InitResManager();
         };
 
-        if (true)//SystemConfig.Instance.IsAutoUpdate)
+        if (SystemConfig.Instance.IsAutoUpdate)
         {
-			
+			UIWindowUpdate.Show();
             // UIManager.Instance.OpenWindow("PanelUpdate");
             //VersionManager.Instance.UpdateGame(updateFinish);
             UIWindowFirstLoading.Hide();
