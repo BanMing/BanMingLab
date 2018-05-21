@@ -24,8 +24,8 @@ public class SingletonGameObject<T> : MonoBehaviour where T : MonoBehaviour
                     }
                 }
 
-                ReflectionTool.CallInstanceFunction(m_Instance, "PreInit", null);
-                //  m_Instance.Invoke("PreInit", 0);
+                // ReflectionTool.CallInstanceFunction(m_Instance, "PreInit", null);
+                 m_Instance.Invoke("PreInit", 0);
             }
 
             return m_Instance;

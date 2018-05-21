@@ -382,7 +382,7 @@ public class VersionManager : Singleton<VersionManager>
                     if (Application.internetReachability == NetworkReachability.NotReachable)
                     {
                         //更新失败，先检查网络
-                        UIFloatingMsgBox.Instance.ShowText(LanguageConfig.GetText(12));
+                        UITextTips.Instance.ShowText(LanguageConfig.GetText(12));
                     }
                     else
                     {

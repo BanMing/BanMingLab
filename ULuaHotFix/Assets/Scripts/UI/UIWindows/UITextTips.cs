@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class UIFloatingMsgBox : SingletonGameObject<UIFloatingMsgBox>
+public class UITextTips : SingletonGameObject<UITextTips>
 {
     private Queue<string> mQueueData = new Queue<string>();
     private Queue<Text> mQueueLabel = new Queue<Text>();

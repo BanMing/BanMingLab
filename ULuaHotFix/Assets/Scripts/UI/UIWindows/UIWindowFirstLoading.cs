@@ -17,8 +17,8 @@ public class UIWindowFirstLoading : SingletonGameObject<UIWindowFirstLoading>
 
     private Text m_Text = null;
     private Slider m_Slider = null;
-    private Transform m_Dice = null;
-    private Transform m_RotateCircle = null;
+    // private Transform m_Dice = null;
+    // private Transform m_RotateCircle = null;
 
     //------------------------------------------------------------------------//
 
@@ -35,8 +35,8 @@ public class UIWindowFirstLoading : SingletonGameObject<UIWindowFirstLoading>
         //m_Slider.value = 0;
         m_Text.text = LanguageConfig.GetText(9);    //正在准备资源
         // m_Text.text="正在准备资源";
-        m_Dice = MyUnityTool.FindChild(transform, "animation");
-        m_RotateCircle = MyUnityTool.FindChild(transform, "rotateRoot");
+        // m_Dice = MyUnityTool.FindChild(transform, "animation");
+        // m_RotateCircle = MyUnityTool.FindChild(transform, "rotateRoot");
     }
 
     //------------------------------------------------------------------------//
@@ -114,9 +114,9 @@ public class UIWindowFirstLoading : SingletonGameObject<UIWindowFirstLoading>
     {
         if (m_Instance!=null)
         {
-            MyUnityTool.SetActive(Instance.m_Dice, false);
+            // MyUnityTool.SetActive(Instance.m_Dice, false);
             MyUnityTool.SetActive(Instance.m_Text.transform, false);
-            MyUnityTool.SetActive(Instance.m_RotateCircle, false);
+            // MyUnityTool.SetActive(Instance.m_RotateCircle, false);
         }
     }
 }
