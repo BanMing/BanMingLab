@@ -1,4 +1,6 @@
 <root>
-<k>CommonViews.prefab</k>
-<v>Common/Views/CommonViews.prefab</v>
+<k>commonviews.prefab.unity3d</k>
+<v>common/views/commonviews.prefab.unity3d</v>
+<k>commonviews.prefab.unity3d.manifest</k>
+<v>common/views/commonviews.prefab.unity3d.manifest</v>
 </root>

@@ -325,19 +325,21 @@ public class AssetBundlesEditorTools : MonoBehaviour
                     else
                     {
                         isWin = false;
-                        luaexe = "./luajit";
+                        // luaexe = "./luajit";
                         // args = "-b -g " + srcFile + " " + outFile;
                         // exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_mac/";
                         //args = "-o " + outFile + " " + srcFile;
                         args = "-b " + srcFile + " " + outFile;
-                        if (isArch64)
-                        {
-                            exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86_64/";
-                        }
-                        else
-                        {
-                            exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86/";
-                        }
+                        // if (isArch64)
+                        // {
+                        //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86_64/";
+                        // }
+                        // else
+                        // {
+                        //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86/";
+                        // }
+                        luaexe = "luajit64.exe";
+                        exedir =Application.dataPath.ToLower().Replace("assets", "") + "Luajit64/";
                     }
                 }
                 break;

@@ -29,7 +29,9 @@ public class GameCenter : MonoBehaviour
             //LoadingBackground.Instance.SetVisible(true);
             //显示第一个界面
             UIWindowFirstLoading.Instance.SetTargetProgress(UIWindowFirstLoading.StartProgressValue);
+            #if !UNITY_EDITOR
             debugGo.SetActive(true);
+            #endif
             //检查网络是否可以访问
             CheckNetworkState(Init);
         }

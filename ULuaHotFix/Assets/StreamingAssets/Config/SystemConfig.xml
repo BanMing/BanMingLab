@@ -2,7 +2,7 @@
   <record>
     <id>0</id>
     <IsUseAssetBundle>True</IsUseAssetBundle>
-    <IsLuaUseZip>True</IsLuaUseZip>
+    <IsLuaUseZip>False</IsLuaUseZip>
     <IsEncryptLuaCode>True</IsEncryptLuaCode>
     <IsUseLuaBytecode>True</IsUseLuaBytecode>
     <IsAutoUpdate>True</IsAutoUpdate>
