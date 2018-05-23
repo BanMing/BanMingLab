@@ -2,9 +2,9 @@
   <record>
     <id>0</id>
     <IsUseAssetBundle>True</IsUseAssetBundle>
-    <IsLuaUseZip>False</IsLuaUseZip>
+    <IsLuaUseZip>True</IsLuaUseZip>
     <IsEncryptLuaCode>True</IsEncryptLuaCode>
-    <IsUseLuaBytecode>True</IsUseLuaBytecode>
+    <IsUseLuaBytecode>False</IsUseLuaBytecode>
     <IsAutoUpdate>True</IsAutoUpdate>
     <IsEncryptConfigFile>True</IsEncryptConfigFile>
   </record>
