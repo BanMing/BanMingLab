@@ -1,15 +1,4 @@
-﻿/******************************************************************
-** 文件名:	
-** 版  权:	(C)  
-** 创建人:  Liange
-** 日  期:	2015.6.9
-** 描  述: 	
-
-**************************** 修改记录 ******************************
-** 修改人: 
-** 日  期: 
-** 描  述: 
-*******************************************************************/
+﻿// ZipResConfig.xml的resRequireID规则：0为不默认下载，1为默认更新下载，其他为不默认下载
 
 using UnityEngine;
 using UnityEditor;
@@ -321,31 +310,35 @@ public class AssetBundlesEditorTools : MonoBehaviour
                     {
                         isWin = true;
                         luaexe = "luajit.exe";
-                        args = "-b " + srcFile + " " + outFile;
-
-                        if (isArch64)
-                        {
-                            exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit2.1.0beta2/x64/";
-                        }
-                        else
-                        {
-                            exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit2.1.0beta2/x86/";
-                        }
+                        // args = "-b " + srcFile + " " + outFile;
+                        args = "-b -g " + srcFile + " " + outFile;
+                        exedir =Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit/";
+                        // if (isArch64)
+                        // {
+                        //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit2.1.0beta2/x64/";
+                        // }
+                        // else
+                        // {
+                        //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit2.1.0beta2/x86/";
+                        // }
                     }
                     else
                     {
                         isWin = false;
                         luaexe = "./luajit";
+                        luaexe = "./luajit";
+                        args = "-b -g " + srcFile + " " + outFile;
+                        exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_mac/";
                         //args = "-o " + outFile + " " + srcFile;
-                        args = "-b " + srcFile + " " + outFile;
-                        if (isArch64)
-                        {
-                            exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86_64/";
-                        }
-                        else
-                        {
-                            exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86/";
-                        }
+                        // args = "-b " + srcFile + " " + outFile;
+                        // if (isArch64)
+                        // {
+                        //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86_64/";
+                        // }
+                        // else
+                        // {
+                        //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86/";
+                        // }
                     }
                 }
                 break;
@@ -366,8 +359,10 @@ public class AssetBundlesEditorTools : MonoBehaviour
                 {
                     isWin = true;
                     luaexe = "luajit.exe";
-                    args = "-b " + srcFile + " " + outFile;
-                    exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit/";
+                    args = "-b -g " + srcFile + " " + outFile;
+                    exedir =Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit/";
+                    // args = "-b " + srcFile + " " + outFile;
+                    // exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit/";
                 }
                 break;
         }
@@ -435,8 +430,6 @@ public class AssetBundlesEditorTools : MonoBehaviour
 
         List<string> configList = new List<string>();
         MyFileUtil.GetFileList(MyFileUtil.InnerConfigDir, ref configList, ".xml");
-        MyFileUtil.GetFileList(MyFileUtil.InnerDataDir, ref configList, ".xml");
-        MyFileUtil.GetFileList(MyFileUtil.InnerEntitiesDir, ref configList, ".xml");
 
         foreach (string fileName in configList)
         {
@@ -492,8 +485,6 @@ public class AssetBundlesEditorTools : MonoBehaviour
         //清理当前工程下加密的配置文件
         List<string> srcConfigFileList = new List<string>();
         MyFileUtil.GetFileList(MyFileUtil.InnerConfigDir, ref srcConfigFileList, MyFileUtil.EncryptXMLFileSuffix);
-        MyFileUtil.GetFileList(MyFileUtil.InnerDataDir, ref srcConfigFileList, MyFileUtil.EncryptXMLFileSuffix);
-        MyFileUtil.GetFileList(MyFileUtil.InnerEntitiesDir, ref srcConfigFileList, MyFileUtil.EncryptXMLFileSuffix);
 
         foreach (string filePath in srcConfigFileList)
         {
@@ -531,8 +522,6 @@ public class AssetBundlesEditorTools : MonoBehaviour
         List<string> configFileList = new List<string>();
 
         MyFileUtil.GetFileList(targetDir + "Assets/StreamingAssets/Config", ref configFileList, ".xml");
-        MyFileUtil.GetFileList(targetDir + "Assets/StreamingAssets/Data", ref configFileList, ".xml");
-        MyFileUtil.GetFileList(targetDir + "Assets/StreamingAssets/Entities", ref configFileList, ".xml");
         foreach (string filePath in configFileList)
         {
             MyFileUtil.DeleteFile(filePath);

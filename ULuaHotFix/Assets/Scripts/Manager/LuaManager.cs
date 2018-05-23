@@ -64,7 +64,11 @@ public class LuaManager : LuaClient
         //     Debug.Log("LuaManager.StartMain");
         // });
         luaState.DoFile("Main.lua");
-        m_InitFinishCB();
+        CallMain();
+        // if (m_InitFinishCB != null)
+        // {
+        //     m_InitFinishCB();
+        // }
     }
 
     static private LuaInterface.LuaFunction DispatchSocketMsgAction = null;
@@ -176,6 +180,7 @@ public class MyLuaResLoader : LuaResLoader
 
     public override byte[] ReadFile(string fileName)
     {
+        Debug.Log("LuaManager ReadFile fileName:"+fileName);
         if (SystemConfig.Instance.IsUseLuaBytecode)
         {
             if (fileName.EndsWith(".lua"))
@@ -273,6 +278,11 @@ public class MyLuaResLoader : LuaResLoader
             {
                 if (File.Exists(filePath))
                 {
+                    
+                    if (SystemConfig.Instance.IsEncryptLuaCode)
+                    {
+                        return ResourcesManager.DecryptLuaCode(File.ReadAllBytes(filePath));
+                    }
                     return File.ReadAllBytes(filePath);
                 }
             }

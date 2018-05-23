@@ -4,7 +4,11 @@
 //            如资源包分为代码资源包、UI图片资源包、UI窗口资源包、场景资源包、声音资源包，新版本生成时，产生这些资源包，并记录到配置表中
 //            客户端根据本地记录计算需要更新的资源包，进行更新
 
-
+// 2018.5.22更新流程：
+// 1.检测本地缓存程序版本号与安装包中的程序版本号->以安装包的版本号大为准->更新缓存路径
+// 2.检测本地缓存程序版本号与服务器程序版本号->以服务器版本号为准->提示是否更新整包
+// 3.比较本地缓存资源包与服务器资源包，记录需要更新的资源包，以及是否有新加的资源包
+// 4.判断网路情况,下载资源包->做资源的MD5对比->替换资源
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -92,7 +96,7 @@ public class VersionManager : Singleton<VersionManager>
 
     //-----------------------------------------------------------------------------------//
 
-    //检查安装包中版本号和本地版本号
+    //检查安装包中版本号和本地版本号--可能在游戏重新安装时缓存文件没被清理
     public void CheckInstallationPackageVersionWithLocal(Action callback = null)
     {
         MyFileUtil.ReadConfigDataInCacheDirAsync(VersionInfoFilePath, (outText)=>
@@ -229,7 +233,7 @@ public class VersionManager : Singleton<VersionManager>
         };
 
         //获取服务器版本信息
-        // ServerURLManager.GetVersionData(getServerVersionFinish);
+        ServerURLManager.GetVersionData(getServerVersionFinish);
         Debug.Log("获取服务器版本信息");
     }
 

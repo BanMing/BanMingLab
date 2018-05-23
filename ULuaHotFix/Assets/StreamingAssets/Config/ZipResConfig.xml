@@ -20,18 +20,6 @@
     <resRequireID>0</resRequireID>
   </Record>
   <Record>
-    <ResZipName>GameData.zip</ResZipName>
-    <ResDir>Assets/StreamingAssets/Data</ResDir>
-    <ResSuffix>.xml.bytes</ResSuffix>
-    <resRequireID>0</resRequireID>
-  </Record>
-  <Record>
-    <ResZipName>Entities.zip</ResZipName>
-    <ResDir>Assets/StreamingAssets/Entities</ResDir>
-    <ResSuffix>.xml.bytes</ResSuffix>
-    <resRequireID>0</resRequireID>
-  </Record>
-  <Record>
     <ResZipName>common_atlas.zip</ResZipName>
     <ResDir>Assets/StreamingAssets/AssetBundles/@Platform/common/atlas</ResDir>
     <ResSuffix>.unity3d,.unity3d.manifest</ResSuffix>

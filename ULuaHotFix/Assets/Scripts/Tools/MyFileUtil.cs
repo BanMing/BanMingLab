@@ -183,22 +183,6 @@ public class MyFileUtil
         }
     }
 
-    static public string InnerDataDir
-    {
-        get
-        {
-            return Application.streamingAssetsPath + "/Data/";
-        }
-    }
-
-    static public string InnerEntitiesDir
-    {
-        get
-        {
-            return Application.streamingAssetsPath + "/Entities/";
-        }
-    }
-
     //读取配置文件数据
     public static string ReadConfigData(string filePath)
     {

@@ -37,7 +37,6 @@ public class MyUnityTool
         {
             return go;
         }
-
         string childName = "";
         while (true)
         {

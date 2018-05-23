@@ -1146,7 +1146,7 @@ public class ResourcesManager : SingletonMonoBehaviour<ResourcesManager>
     }
 
     //解密Lua代码
-    static private byte[] DecryptLuaCode(byte[] data)
+    static public byte[] DecryptLuaCode(byte[] data)
     {
         if(SystemConfig.Instance.IsEncryptLuaCode)
         {

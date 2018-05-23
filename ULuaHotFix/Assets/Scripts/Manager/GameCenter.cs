@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// 流程：检测网络->检测更新->资源管理初始化->lua初始化并加载
+/// </summary>
 public class GameCenter : MonoBehaviour
 {
     LuaManager luaManager = null;
@@ -19,7 +22,7 @@ public class GameCenter : MonoBehaviour
         UnityEngine.Screen.sleepTimeout = -1;
         try
         {
-            Debug.Log("GlobalManager.Start");
+            Debug.Log("GameCenter.Start");
 
             //LoadingBackground.Instance.SetVisible(true);
             //显示第一个界面
@@ -35,30 +38,24 @@ public class GameCenter : MonoBehaviour
     }
 
 
-    void Update()
-    {
-
-    }
-
-
     void Init()
     {
         System.Action<bool> updateFinish = delegate (bool result)
         {
             UIWindowUpdate.Close();
             UIWindowFirstLoading.Show();
-            Debug.Log("GlobalManager.Init:检查更新结束");
+            Debug.Log("GameCenter.Init:检查更新结束");
             InitResManager();
         };
 
         if (SystemConfig.Instance.IsAutoUpdate)
         {
-			UIWindowUpdate.Show();
+            UIWindowUpdate.Show();
             // UIManager.Instance.OpenWindow("PanelUpdate");
             //VersionManager.Instance.UpdateGame(updateFinish);
             UIWindowFirstLoading.Hide();
 
-            Debug.Log("GlobalManager.Init:开始检查更新");
+            Debug.Log("GameCenter.Init:开始检查更新");
             VersionManager.Instance.UpdateGame(updateFinish);
         }
         else
@@ -68,7 +65,7 @@ public class GameCenter : MonoBehaviour
             InitResManager();
         }
 
-        Debug.Log("GlobalManager.Init");
+        Debug.Log("GameCenter.Init");
     }
 
     void InitResManager()
@@ -77,38 +74,36 @@ public class GameCenter : MonoBehaviour
         {
             if (result)
             {
-                Debug.Log("GlobalManager.InitResManager:资源系统初始化成功");
+                Debug.Log("GameCenter.InitResManager:资源系统初始化成功");
             }
             else
             {
-                Debug.LogError("GlobalManager.InitResManager:资源系统初始化失败");
+                Debug.LogError("GameCenter.InitResManager:资源系统初始化失败");
             }
 
             UIWindowFirstLoading.Instance.SetTargetProgress(UIWindowFirstLoading.FinishResProgressValue);
 
-            //初始化图集工具
-            // UIAtlasTool.Instance.Init(() =>
-            // {
-                InitLuaManager();
-            // });
+            InitLuaManager();
+
 
         };
 
         UIWindowFirstLoading.Instance.SetTargetProgress(UIWindowFirstLoading.InitResProgressValue);
         ResourcesManager.Instance.Init(initCB);
-        Debug.Log("GlobalManager.InitResManager:资源系统开始初始化");
+        Debug.Log("GameCenter.InitResManager:资源系统开始初始化");
     }
 
     void InitLuaManager()
     {
-        LuaManager.m_InitFinishCB = delegate ()
-        {
-            UIWindowFirstLoading.Instance.SetTargetProgress(UIWindowFirstLoading.FullProgressValue);
-            //UIWindowFirstLoading.Close();
-        };
+        // LuaManager.m_InitFinishCB = delegate ()
+        // {
+        //     UIWindowFirstLoading.Instance.SetTargetProgress(UIWindowFirstLoading.FullProgressValue);
+        //     //UIWindowFirstLoading.Close();
+        // };
+        UIWindowFirstLoading.Instance.SetTargetProgress(UIWindowFirstLoading.FullProgressValue);
         luaManager = gameObject.AddComponent<LuaManager>();
 
-        Debug.Log("GlobalManager.InitLuaManager");
+        Debug.Log("GameCenter.InitLuaManager");
     }
 
     public LuaManager GetLuaManager()
@@ -121,7 +116,7 @@ public class GameCenter : MonoBehaviour
     //没有网络提示
     static public void CheckNetworkState(System.Action checkFinish)
     {
-        Debug.Log("GlobalManager.CheckNetworkState");
+        Debug.Log("GameCenter.CheckNetworkState");
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {

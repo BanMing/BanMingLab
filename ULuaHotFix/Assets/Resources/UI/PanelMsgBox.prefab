@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 222251518513756646}
   - component: {fileID: 114440764176677176}
   m_Layer: 5
-  m_Name: BtnCancelText
+  m_Name: BtnOKText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -387,7 +387,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u786E\u5B9A"
 --- !u!114 &114479506555980300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -515,7 +515,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u53D6\u6D88"
 --- !u!114 &114735030353586044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -548,7 +548,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: "\u786E\u5B9A"
 --- !u!114 &114749536178340154
 MonoBehaviour:
   m_ObjectHideFlags: 1

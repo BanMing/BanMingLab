@@ -9,7 +9,7 @@ using System.Reflection;
 
 public static class CustomSettings
 {
-    public static string saveDir = Application.dataPath + "/Source/Generate/";    
+    public static string saveDir = Application.dataPath + "/Scripts/Generate/";    
     public static string toluaBaseType = Application.dataPath + "/ToLua/BaseType/";    
 
     //导出时强制做为静态类的类型(注意customTypeList 还要添加这个类型才能导出)
@@ -146,6 +146,8 @@ public static class CustomSettings
         _GT(typeof(RenderTexture)),
         _GT(typeof(Resources)),     
         _GT(typeof(LuaProfiler)),
+        _GT(typeof(MyUnityTool)),
+        _GT(typeof(UIWindowFirstLoading)),
     };
 
     public static List<Type> dynamicList = new List<Type>()
