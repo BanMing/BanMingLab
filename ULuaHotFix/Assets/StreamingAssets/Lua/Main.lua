@@ -1,7 +1,10 @@
 --主入口函数。从这里开始lua逻辑
 function Main()					
 	print("logic start")	 
-	coroutine.start(ImprotFiles)
+	print("logic start11")	 
+	print("logic start223")	 
+	-- coroutine.start(ImprotFiles)
+	-- InitMain()
 end
 
 function InitMain()	
@@ -20,6 +23,6 @@ function OnApplicationQuit()
 end
 
 function ImprotFiles()
-	coroutine.wait(1)
+	-- coroutine.wait(1)
 	InitMain()
 end
