@@ -361,6 +361,7 @@ public class AssetBundlesEditorTools : MonoBehaviour
                 {
                     isWin = true;
                     luaexe = "luajit32.exe";
+                    // luaexe = "luajit.exe";
                     // args = "-b " + srcFile + " " + outFile;
                     exedir =Application.dataPath.ToLower().Replace("assets", "") + "Luajit/";
                     args = "-b " + srcFile + " " + outFile;
