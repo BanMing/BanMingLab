@@ -327,9 +327,9 @@ public class AssetBundlesEditorTools : MonoBehaviour
                     else
                     {
                         isWin = false;
-                        luaexe = "./luajit";
+                        // luaexe = "./luajit";
                         // args = "-b -g " + srcFile + " " + outFile;
-                        exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_mac/";
+                        // exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_mac/";
                         //args = "-o " + outFile + " " + srcFile;
                         args = "-b " + srcFile + " " + outFile;
                         // if (isArch64)
@@ -340,7 +340,8 @@ public class AssetBundlesEditorTools : MonoBehaviour
                         // {
                         //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/x86/";
                         // }
-                        
+                        luaexe = "open";
+                        exedir =Application.dataPath.ToLower().Replace("assets", "") + "Luajit64/";
                     }
                 }
                 break;
@@ -372,6 +373,8 @@ public class AssetBundlesEditorTools : MonoBehaviour
         }
 
         Directory.SetCurrentDirectory(exedir);
+        // Debug.Log("exedir:"+exedir);
+        // Debug.Log("currDir:"+currDir);
         System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
         info.FileName = luaexe;
         info.Arguments = args;
