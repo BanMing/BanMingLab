@@ -8,6 +8,7 @@ using System;
 /// </summary>
 public class GameCenter : MonoBehaviour
 {
+    
     public GameObject debugGo;
     LuaManager luaManager = null;
     static public GameCenter Instance;
