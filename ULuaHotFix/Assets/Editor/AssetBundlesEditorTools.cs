@@ -125,8 +125,8 @@ public class AssetBundlesEditorTools : MonoBehaviour
         //}
         //清理publish目录
         string publishDir = Application.dataPath + "/../Publish/" +
-                MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget) + "/" ;
-                // MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget) + "/" + PackageWizard.m_wizard.version + "/";
+                MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget) + "/";
+        // MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget) + "/" + PackageWizard.m_wizard.version + "/";
         MyFileUtil.DeleteDir(publishDir);
         MyFileUtil.CreateDir(publishDir);
 
@@ -158,7 +158,7 @@ public class AssetBundlesEditorTools : MonoBehaviour
         //生成资源包
         GenerateTargetProjectResZip();
 
-        
+
 #if UNITY_ANDROID
         //删除目标工程的子游戏bundle
         MyFileUtil.DeleteDir(string.Format("{0}Assets/StreamingAssets/AssetBundles/{1}/qile/games", CopyProjectTargetDir, ResourcesManager.GetPlatformDir()));
@@ -250,24 +250,25 @@ public class AssetBundlesEditorTools : MonoBehaviour
                 switch (type)
                 {
                     case LuaEncryptType.Auto:
-                        EncodeLuaFile(filePath, newFilePath, EditorUserBuildSettings.activeBuildTarget);
+                        ///ios 为64位 
+                        if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)
+                        { newFilePath = filePath.Replace(".lua", MyLuaResLoader.X64LuaByteCodeFileSuffix); }
+                        EncodeLuaFile(filePath, newFilePath, EditorUserBuildSettings.activeBuildTarget, EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS);
                         break;
                     case LuaEncryptType.WindowsEditor: EncodeLuaFileForEditor(filePath, newFilePath, RuntimePlatform.WindowsEditor); break;
                     case LuaEncryptType.MacEditor: EncodeLuaFileForEditor(filePath, newFilePath, RuntimePlatform.OSXEditor); break;
                 }
             }
-
-            //刷新后再次编译64位的字节码，不然在IOS编辑器下会出错
             AssetDatabase.Refresh();
 
-            if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)
-            {
-                foreach (string filePath in luaFileList)
-                {
-                    string newFilePath = filePath.Replace(".lua", MyLuaResLoader.X64LuaByteCodeFileSuffix);
-                    EncodeLuaFile(filePath, newFilePath, EditorUserBuildSettings.activeBuildTarget, true);
-                }
-            }
+            // if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.iOS)
+            // {
+            //     foreach (string filePath in luaFileList)
+            //     {
+            //         string newFilePath = filePath.Replace(".lua", MyLuaResLoader.X64LuaByteCodeFileSuffix);
+            //         EncodeLuaFile(filePath, newFilePath, EditorUserBuildSettings.activeBuildTarget, true);
+            //     }
+            // }
         }
 
         //将lua代码打包为zip
@@ -293,7 +294,7 @@ public class AssetBundlesEditorTools : MonoBehaviour
         Debug.Log("加密Lua结束");
     }
 
-    //编译Lua代码为bytecode
+    //编译Lua代码为bytecode ios 64位 Android 32位
     public static void EncodeLuaFile(string srcFile, string outFile, UnityEditor.BuildTarget buildTarget, bool isArch64 = false)
     {
         bool isWin = true;
@@ -309,26 +310,24 @@ public class AssetBundlesEditorTools : MonoBehaviour
                     if (Application.platform == RuntimePlatform.WindowsEditor)
                     {
                         isWin = true;
-                        
+
                         args = "-b " + srcFile + " " + outFile;
-                        // args = "-b -g " + srcFile + " " + outFile;
-                        // exedir =Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit/";
-                        if (isArch64)
-                        {
-                            luaexe = "luajit64.exe";
-                            exedir =Application.dataPath.ToLower().Replace("assets", "") + "Luajit64/";
-                        }
-                        else
-                        {
-                            luaexe = "luajit32.exe";
-                            exedir =Application.dataPath.ToLower().Replace("assets", "") + "Luajit/";
-                        }
+                        // if (isArch64)
+                        // {
+                        luaexe = "luajit64.exe";
+                        exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_win/Luajit64/";
+                        // }
+                        // else
+                        // {
+                        //     luaexe = "luajit32.exe";
+                        //     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_win/Luajit/";
+                        // }
                     }
                     else
                     {
                         isWin = false;
                         luaexe = "./luajit";
-                        exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_mac/";
+                        exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/64/";
                         args = "-b " + srcFile + " " + outFile;
                     }
                 }
@@ -339,7 +338,6 @@ public class AssetBundlesEditorTools : MonoBehaviour
                 {
                     isWin = false;
                     luaexe = "./luac";
-                    //args = "-o " + outFile + " " + srcFile;
                     args = "-b " + srcFile + " " + outFile;
                     exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luavm/";
                 }
@@ -348,21 +346,25 @@ public class AssetBundlesEditorTools : MonoBehaviour
             case BuildTarget.StandaloneWindows:
             case BuildTarget.StandaloneWindows64:
                 {
-                    isWin = true;
-                    luaexe = "luajit32.exe";
-                    // luaexe = "luajit.exe";
-                    // args = "-b " + srcFile + " " + outFile;
-                    exedir =Application.dataPath.ToLower().Replace("assets", "") + "Luajit/";
-                    args = "-b " + srcFile + " " + outFile;
-                    // exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit/";
-                    // Debug.Log("outFile:"+outFile);
+                    if (Application.platform == RuntimePlatform.WindowsEditor)
+                    {
+                        isWin = true;
+                        luaexe = "luajit32.exe";
+                        exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_win/Luajit/";
+                        args = "-b " + srcFile + " " + outFile;
+                    }
+                    else
+                    {
+                        isWin = false;
+                        luaexe = "./luajit";
+                        exedir = Application.dataPath.ToLower().Replace("assets", "") + "LuaEncoder/luajit_ios/32/";
+                        args = "-b " + srcFile + " " + outFile;
+                    }
                 }
                 break;
         }
 
         Directory.SetCurrentDirectory(exedir);
-        // Debug.Log("exedir:"+exedir);
-        // Debug.Log("currDir:"+currDir);
         System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
         info.FileName = luaexe;
         info.Arguments = args;
@@ -743,9 +745,9 @@ public class AssetBundlesEditorTools : MonoBehaviour
             // }
             // else
             // {
-                zipResFilePath = rootDir + "Publish/" +
-                MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget)
-                + "/" + zipConfig.resZipName;
+            zipResFilePath = rootDir + "Publish/" +
+            MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget)
+            + "/" + zipConfig.resZipName;
             // }
             ZIPTool.CompressFiles(fileList, dirRemove, zipResFilePath, 0, false, true);
 
@@ -761,7 +763,7 @@ public class AssetBundlesEditorTools : MonoBehaviour
             // }
             // else
             // {
-                resInfo.resURL = resInfo.resName;
+            resInfo.resURL = resInfo.resName;
             // }
 
             listResInfo.Add(resInfo);
@@ -779,8 +781,8 @@ public class AssetBundlesEditorTools : MonoBehaviour
         // }
         // else
         // {
-            xmlFilePath = rootDir + "Publish/" +
-            MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget) + "/VersionInfo.xml";
+        xmlFilePath = rootDir + "Publish/" +
+        MyUnityEditorTool.GetPlatformFolderForAssetBundles(EditorUserBuildSettings.activeBuildTarget) + "/VersionInfo.xml";
         // }
 
         File.WriteAllText(xmlFilePath, xmlContent);
