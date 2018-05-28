@@ -9,7 +9,7 @@ function Main()
 end
 
 function Test()
-	print("test~~~~~~~~~~~~~~~~~~~~")
+	print("testMacMacMacMacMacMacMac~~~~~~~~~~~~Mac")
 end
 function InitMain()	
 	UIWindowFirstLoading.Close()
@@ -38,7 +38,7 @@ function ImprotFiles()
 	Test()  
 	coroutine.wait(1)
 	Test() 
-	print("ImprotFiles 2")	
+	print("ImprotFiles 2MacMacMacMacMac")	
 	coroutine.wait(1)
 	InitMain()
 end
