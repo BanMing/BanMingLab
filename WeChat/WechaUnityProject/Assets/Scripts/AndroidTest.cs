@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AndroidTest : MonoBehaviour {
-    private AndroidJavaObject activity;
+public class AndroidTest : MonoBehaviour
+{
+    public GameObject DebugView;
 
-	private AndroidJavaObject Activity
+    void Start()
+    {
+        DebugView.SetActive(true);
+    }
+    private AndroidJavaObject activity;
+    private AndroidJavaObject wxSender;
+    private AndroidJavaObject Activity
     {
         get
         {
@@ -17,14 +24,32 @@ public class AndroidTest : MonoBehaviour {
             return activity;
         }
     }
-	public void CheckWeChat(){
-        Activity.Call("CheckWeChatSdk");
-	}
-
-    public void LoginWeChat(){
-        Activity.Call("ReqLoginWeChat");
+    private AndroidJavaObject WXSender
+    {
+        get
+        {
+            if (wxSender == null)
+            {
+                AndroidJavaClass sender = new AndroidJavaClass("com.suixinplay.base.WXSender");
+                wxSender = sender.CallStatic<AndroidJavaObject>("Instance");
+                wxSender.Call("Init", Activity);
+            }
+            return wxSender;
+        }
     }
-    public void AndroidCall(string str){
-        // Debug.
+
+    public void CheckWeChat()
+    {
+        WXSender.Call("CheckWeChatSdk");
+    }
+
+    public void LoginWeChat()
+    {
+        // Debug.Log("LoginWeChat");
+        WXSender.Call("LoginWeChat");
+    }
+    public void AndroidCall(string str)
+    {
+        Debug.Log("AndroidCall:" + str);
     }
 }
