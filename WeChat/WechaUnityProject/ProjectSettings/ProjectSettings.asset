@@ -67,7 +67,7 @@ PlayerSettings:
   defaultIsFullScreen: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
-  runInBackground: 0
+  runInBackground: 1
   captureSingleScreen: 0
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
@@ -243,7 +243,7 @@ PlayerSettings:
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: E:/Company/Clent/5.6.6Clent/KeyStore/Lesanguo.keystore
+  AndroidKeystoreName: E:/Company/Clent/qipaixiangmu/LShiDianBan/KeyStore/Lesanguo.keystore
   AndroidKeyaliasName: lesanguo
   AndroidTVCompatibility: 1
   AndroidIsGame: 1

@@ -1,4 +1,4 @@
-package com.suixinplay.base;
+package com.suixinplay.base.WX;
 
 public class Constants {
     public static final String APP_ID = "wx57fdd2cd0b0a8440";

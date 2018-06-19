@@ -1,13 +1,12 @@
 package com.suixinplay.base.wxapi;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-import android.content.Intent;
 
-import com.suixinplay.base.Constants;
-import com.suixinplay.base.MyMainActivity;
-import com.suixinplay.base.WXSender;
+import com.suixinplay.base.WX.Constants;
+import com.suixinplay.base.WX.WXSender;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -49,51 +48,57 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         switch (baseResp.getType()) {
             //支付
             case ConstantsAPI.COMMAND_PAY_BY_WX:
+                OnPayResp(baseResp);
                 break;
-                case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX:
-                    break;
-                //玩家登陆
+            //分享
+            case ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX:
+                OnShareResp(baseResp);
+                break;
+            //玩家登陆
             case ConstantsAPI.COMMAND_SENDAUTH:
-                OnLoginResp(baseResp) ;
+                OnLoginResp(baseResp);
                 break;
         }
         finish();
     }
 
-    private void OnLoginResp(BaseResp baseResp){
-        switch (baseResp.errCode){
-            //登陆成功
-            case BaseResp.ErrCode.ERR_OK:
-//                SendAuth.Resp sendResp = (SendAuth.Resp) baseResp;
-//                GetUserInfo(((SendAuth.Resp) baseResp).code);
-                break;
-                //取消或者失败
-                default:
-                    break;
+    //支付回调
+    private void OnPayResp(BaseResp baseResp) {
+        if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
+            //支付成功
+        } else {
+            //支付失败
         }
     }
-//    private void GetUserInfo(String code){
-//        String accessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + Constants.APP_ID
-//                + "&secret=" + Constants.APP_SECRET + "&code=" + code + "&grant_type=authorization_code";
-//        WeiXinPresenter.wxLoginPresenter(accessTokenUrl, new ILoadDataUIRunnadle() {
-//            @Override
-//            public boolean onPreRun() {
-//                return false;
-//            }
-//
-//            @Override
-//            public void onPostRun(Object... params) {
-//                if (params[0] instanceof WechatBack) {
-//                    WechatBack wechatBack = (WechatBack) params[0];
-//                    if (wechatBack.getAccessToken() != null && wechatBack.getOpenid() != null) {
-//                        UnityPlayer.UnitySendMessage("MainCamera", "WEloginCallBack", wechatBack.getAccessToken() + "#" + wechatBack.getOpenid());
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailUI(Object... params) {
-//            }
-//        });
-//    }
+
+    //分享回调
+    private void OnShareResp(BaseResp baseResp) {
+        if (baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
+            //分享成功
+            UnityPlayer.UnitySendMessage("AndroidTest", "AndroidCall", "分享成功");
+        } else {
+            //分享失败
+            UnityPlayer.UnitySendMessage("AndroidTest", "AndroidCall", "分享失败");
+        }
+        finish();
+    }
+
+    //登录回调
+    private void OnLoginResp(BaseResp baseResp) {
+        switch (baseResp.errCode) {
+            //登陆成功
+            case BaseResp.ErrCode.ERR_OK:
+                SendAuth.Resp sendResp = (SendAuth.Resp) baseResp;
+                GetUserInfo(((SendAuth.Resp) baseResp).code);
+                break;
+            //取消或者失败
+            default:
+                break;
+        }
+    }
+
+    //这里直接使用unity中的webrequest,不使用安卓中的webrequest，这样就可以不再写ios的webrequest
+    private void GetUserInfo(String code) {
+        UnityPlayer.UnitySendMessage("AndroidTest", "GetAccessToken", code);
+    }
 }
