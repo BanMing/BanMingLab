@@ -45,18 +45,60 @@ public class AndroidTest : MonoBehaviour
     {
         WXSender.Call("CheckWeChatSdk");
     }
-
+    public void ShareContentToMoment()
+    {
+        var url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529415351626&di=de12a52e1a3150c70dd0393484d8c15e&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0196a156c937e46ac7252ce68a8504.png";
+        var path = Application.persistentDataPath + "/shareIcon.png";
+        Debug.Log("ShareLocalPicToMoment path:" + path);
+        StartCoroutine(DownPng(url, path, false));
+    }
     public void ShareContentToFriend()
     {
-        WXSender.Call("ShareContentToFriend", "www.baidu.com", "测试", "测试Content", "http://mmbiz.qpic.cn/mmbiz/PiajxSqBRaEIVJ6bW5EhIpIVZuxavukF9QFCv8huhyAFhXWvianxRYw9vyfjoEmr8uSPAJOI3ckfRWLEiaJw6EIwA/0?wx_fmt=png");
+        // WXSender.Call("ShareContentToFriend", "www.baidu.com", "测试", "测试Content", "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529415351626&di=de12a52e1a3150c70dd0393484d8c15e&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0196a156c937e46ac7252ce68a8504.png");
+        var url = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1529415351626&di=de12a52e1a3150c70dd0393484d8c15e&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0196a156c937e46ac7252ce68a8504.png";
+        var path = Application.persistentDataPath + "/shareIcon.png";
+        Debug.Log("ShareContentToFriend path:" + path);
+        StartCoroutine(DownPng(url, path, true));
     }
+    IEnumerator DownPng(string url, string path, bool isFriend)
+    {
+        if (!File.Exists(path))
+        {
+            var webRequest = UnityWebRequest.Get(url);
+            yield return webRequest.Send();
+            if (webRequest.isHttpError || webRequest.isNetworkError)
+            {
 
+            }
+            else
+            {
+                // webRequest.downloadHandler.data
+                Debug.Log("webRequest.downloadHandler.data:" + webRequest.downloadHandler.data.Length);
+                File.WriteAllBytes(path, webRequest.downloadHandler.data);
+                Debug.Log("Down Load Over!");
+            }
+        }
+        if (isFriend)
+        {
+            WXSender.Call("ShareContentToFriend", "www.baidu.com", "测试", "测试Content", path);
+        }
+        else
+        {
+            WXSender.Call("ShareContentToMoments", "www.baidu.com", "测试", "测试Content", path);
+        }
+
+    }
+    public void ShareLocalPicToMoments()
+    {
+        StartCoroutine(ShareShotScreenPic(false));
+    }
     public void ShareLocalPicToFriend()
     {
-        StartCoroutine(ShareShotScreenPic());
+        StartCoroutine(ShareShotScreenPic(true));
     }
-    private IEnumerator ShareShotScreenPic(){
-        
+    private IEnumerator ShareShotScreenPic(bool isFriend)
+    {
+
         // 截屏1帧后再呼起微信
         yield return new WaitForEndOfFrame();
 
@@ -68,8 +110,15 @@ public class AndroidTest : MonoBehaviour
         tex.Apply();
         System.IO.File.WriteAllBytes(imgPath, tex.EncodeToJPG());
         Debug.Log("分享截图：" + imgPath);
+        if (isFriend)
+        {
+            WXSender.Call("ShareLocalPicToFriend", imgPath);
+        }
+        else
+        {
+            WXSender.Call("ShareLocalPicToMoments", imgPath);
+        }
 
-        WXSender.Call("ShareLocalPicToFriend", imgPath);
     }
     public void LoginWeChat()
     {

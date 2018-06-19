@@ -45,33 +45,35 @@ public class WXSender {
         return bIsWXAppInstalledAndSupported;
     }
 
-    //分享图文链接---朋友
-    public void ShareContentToFriend(String webUrl, String title, String content, String imgUrl) {
+    //分享图文链接---朋友---这里使用本地图片--先由unity下载到沙盒路径然后直接使用图片
+    public void ShareContentToFriend(String webUrl, String title, String content, String imgPath) {
         WXWebpageObject webPage = new WXWebpageObject();
         webPage.webpageUrl = webUrl;
-//        UnityPlayer.UnitySendMessage("AndroidTest", "AndroidCall", "imgUrl: " + imgUrl);
-//        WXImageObject imgObj = new WXImageObject();
-//        imgObj.imagePath = imgUrl;
+
         WXMediaMessage msg = new WXMediaMessage(webPage);
         msg.title = title;
         msg.description = content;
-//        msg.mediaObject = imgObj;
-//        Bitmap bmp = BitmapFactory.decodeFile(imgUrl);
-//        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
-//        bmp.recycle();
-//        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
+        Bitmap bmp = BitmapFactory.decodeFile(imgPath);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+        bmp.recycle();
+        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
+
         ShareReq(msg, SendMessageToWX.Req.WXSceneSession);
     }
 
     //分享图文链接---朋友圈
-    public void ShareContentToMoments(String webUrl, String title, String content) {
+    public void ShareContentToMoments(String webUrl, String title, String content, String imgPath) {
         WXWebpageObject webPage = new WXWebpageObject();
         webPage.webpageUrl = webUrl;
+
 
         WXMediaMessage msg = new WXMediaMessage(webPage);
         msg.title = title;
         msg.description = content;
-
+        Bitmap bmp = BitmapFactory.decodeFile(imgPath);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+        bmp.recycle();
+        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
         ShareReq(msg, SendMessageToWX.Req.WXSceneTimeline);
     }
 
@@ -91,8 +93,18 @@ public class WXSender {
     }
 
     //分享本地图片---朋友圈
-    public void ShareLocalPicToMoments() {
+    public void ShareLocalPicToMoments(String imgPath) {
+        WXImageObject imgObj = new WXImageObject();
+        imgObj.setImagePath(imgPath);
 
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = imgObj;
+        Bitmap bmp = BitmapFactory.decodeFile(imgPath);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, 150, 150, true);
+        bmp.recycle();
+        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
+
+        ShareReq(msg, SendMessageToWX.Req.WXSceneTimeline);
     }
 
     //发送
