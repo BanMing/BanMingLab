@@ -9,7 +9,8 @@ class Program
         TaskTest taskTest = new TaskTest();
         // taskTest.TestCreate();
 
-        taskTest.TaskLife();
+        // taskTest.TaskLife();
+        taskTest.CancelTask();
     }
 }
 

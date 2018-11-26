@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 public class TaskTest
@@ -116,8 +117,37 @@ public class TaskTest
         task1.Start();
         task2.Start();
         //在task1执行完成后再执行该task
-        task1.ContinueWith(task=>{
+        task1.ContinueWith(task =>
+        {
             task.ToString();
         });
+    }
+    public void CancelTask()
+    {
+        var tokenSource=new CancellationTokenSource();
+        var token = tokenSource.Token;
+        var task = Task.Factory.StartNew(() =>
+        {
+
+            for (int i = 0; i < 1000; i++)
+            {
+                Thread.Sleep(1000);
+                if (token.IsCancellationRequested)
+                {
+                    Console.WriteLine("Abort mission success!");
+                    return;
+                }
+            }
+
+        },token);
+
+        token.Register(()=>{
+            Console.WriteLine("Canceled");
+        });
+
+        Console.WriteLine("Press enter to cancel task..");
+        // Console.();
+        tokenSource.Cancel();
+        // Console.ReadKey();
     }
 }
