@@ -367,13 +367,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4194bfe04827943288b6c7c80373b2c9, type: 3}
+  m_Script: {fileID: 11500000, guid: c455416688e9749299d654e3f2f3454f, type: 3}
   m_Name: PlayableAssetTest
   m_EditorClassIdentifier: 
   testText:
-    exposedName: 
+    exposedName: 4bc194212444144e9b390db0a596c260
     defaultValue: {fileID: 0}
-  testStr: 
+  testStr: fffff
 --- !u!114 &114570618659817948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -582,7 +582,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: PlayableAssetTest
+    m_DisplayName: ssss
     m_Version: 1
   - m_Start: 4.766666666666667
     m_ClipIn: 0
@@ -651,7 +651,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: PlayableAssetTest
+    m_DisplayName: ssss
     m_Version: 1
   m_Version: 1
 --- !u!114 &114833095203378120
@@ -693,13 +693,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4194bfe04827943288b6c7c80373b2c9, type: 3}
+  m_Script: {fileID: 11500000, guid: c455416688e9749299d654e3f2f3454f, type: 3}
   m_Name: PlayableAssetTest
   m_EditorClassIdentifier: 
   testText:
-    exposedName: e28ac2173f1d149c9b552c22476226d4
+    exposedName: 
     defaultValue: {fileID: 0}
-  testStr: 23dfff
+  testStr: rrrrr
 --- !u!114 &114987889032200400
 MonoBehaviour:
   m_ObjectHideFlags: 1
