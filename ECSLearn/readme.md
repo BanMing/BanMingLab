@@ -41,3 +41,7 @@ secondJob.Schedule(firstJobHandle);
 
 多任务并发
 大量同样的操作在一个物体上。
+
+
+Ecs:
+![image.png](https://upload-images.jianshu.io/upload_images/3438059-6d7189267e1e86bf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
