@@ -5,7 +5,7 @@ public class StructNewTest
 {
     struct Test
     {
-        public int a ;
+        public int a;
 
     }
 
@@ -20,8 +20,8 @@ public class StructNewTest
     }
     sealed class Line
     {
-        public float x;
-        public float y;
+        public float x = 0;
+        public float y = 0;
     }
     public static void Run()
     {
