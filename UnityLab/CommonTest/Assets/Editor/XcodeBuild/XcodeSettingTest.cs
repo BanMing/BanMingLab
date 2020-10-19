@@ -1,3 +1,4 @@
+#if UNITY_OSX || UNITY_IOS
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -54,3 +55,4 @@ public class XcodeSettingTest
         }
     }
 }
+#endif

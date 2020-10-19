@@ -41,3 +41,4 @@ sysinfo.txt
 # *.unitypackage
 
 CSharpLab/bin/
+UnityLab/CommonTest/Logs/
