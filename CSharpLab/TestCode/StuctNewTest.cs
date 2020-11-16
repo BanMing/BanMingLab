@@ -5,7 +5,7 @@ public class StructNewTest
 {
     struct Test
     {
-        public int a;
+        // public int a;
 
     }
 
@@ -16,13 +16,15 @@ public class StructNewTest
 
         // }
         public float x;
-        public float y;
+        // public float y;
     }
+
     sealed class Line
     {
         public float x = 0;
-        public float y = 0;
+        // public float y = 0;
     }
+
     public static void Run()
     {
         Point point1 = new Point();
