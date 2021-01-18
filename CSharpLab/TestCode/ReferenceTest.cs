@@ -1,6 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
+public class ReferneceTest1
+{
+    public int a;
+}
+
 public class ReferenceTest
 {
 
@@ -19,7 +25,7 @@ public class ReferenceTest
         var list2 = new List<int>() { 2, 3 };
         Test2(list2);
         Console.WriteLine(list2[0]);
-        
+
         var ararry = new int[] { 2 };
         Test3(ararry);
         Console.WriteLine(ararry[0]);
@@ -34,9 +40,23 @@ public class ReferenceTest
     {
         ararry[0] = 4;
     }
+
     public static void Run()
     {
         ReferenceTest referenceTest = new ReferenceTest();
         referenceTest.Test1();
+    }
+
+    private static void Test1(ReferneceTest1 test1)
+    {
+        test1.a = 4;
+    }
+
+    public static void Run1()
+    {
+        ReferneceTest1 test1 = new ReferneceTest1();
+        test1.a = 3;
+        Test1(test1);
+        Console.WriteLine(test1.a);
     }
 }

@@ -7,7 +7,7 @@ namespace CSharpLab
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            AsyncTest.Run();
+            ReferenceTest.Run1();
         }
     }
 }
