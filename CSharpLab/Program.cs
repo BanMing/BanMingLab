@@ -19,7 +19,7 @@ namespace CSharpLab
             // {
             //     System.Console.WriteLine(random.Next(-10, 2));
             // }
-            FormatTest.Run();
+            Inherit.InheritTest.Run();
         }
 
 
