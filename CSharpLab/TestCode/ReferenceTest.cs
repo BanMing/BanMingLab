@@ -2,14 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ReferneceTest1
-{
-    public int a;
-}
 
 public class ReferenceTest
 {
-
     private List<int> list;
 
     public ReferenceTest()
@@ -46,6 +41,11 @@ public class ReferenceTest
         ReferenceTest referenceTest = new ReferenceTest();
         referenceTest.Test1();
     }
+}
+
+public class ReferneceTest1
+{
+    public int a;
 
     private static void Test1(ReferneceTest1 test1)
     {
@@ -58,5 +58,25 @@ public class ReferenceTest
         test1.a = 3;
         Test1(test1);
         Console.WriteLine(test1.a);
+    }
+}
+
+public class ReferneceTest2
+{
+    public ReferneceTest1 a;
+
+    public static void Run()
+    {
+        ReferneceTest1 test1 = new ReferneceTest1();
+        test1.a = 3;
+        Console.WriteLine(test1.a);
+
+        ReferneceTest2 test2 = new ReferneceTest2();
+        test2.a = test1;
+        Console.WriteLine(test2.a.a);
+
+        test1 = new ReferneceTest1();
+        test1.a = 4;
+        Console.WriteLine(test2.a.a);
     }
 }

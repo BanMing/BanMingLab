@@ -28,6 +28,7 @@ public class StructNewTest
     public static void Run()
     {
         Point point1 = new Point();
+        point1.x = 0;
         Console.WriteLine($"{point1.x.ToString()}");
 
         // Point point2;

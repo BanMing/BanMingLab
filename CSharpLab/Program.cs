@@ -19,7 +19,10 @@ namespace CSharpLab
             // {
             //     System.Console.WriteLine(random.Next(-10, 2));
             // }
-            Inherit.InheritTest.Run();
+            // Inherit.InheritTest.Run();
+
+            // LoopTest.Run();
+            ReferneceTest2.Run();
         }
 
 
