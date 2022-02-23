@@ -5,13 +5,21 @@ using System.Collections.Generic;
 
 public class ReferenceTest
 {
-    private List<int> list;
+    public List<int> list;
 
     public ReferenceTest()
     {
         this.list = new List<int>() { 1, 2, 3, 4 };
     }
 
+    public void Print()
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            System.Console.WriteLine($"Test List[{i}] = {list[i]}");
+        }
+
+    }
     public void Test1()
     {
         Test2(list);
@@ -78,5 +86,22 @@ public class ReferneceTest2
         test1 = new ReferneceTest1();
         test1.a = 4;
         Console.WriteLine(test2.a.a);
+    }
+}
+
+public class ReferneceTest3
+{
+    private List<int> list;
+
+    public static void Run()
+    {
+        ReferenceTest test = new ReferenceTest();
+
+        ReferneceTest3 test3 = new ReferneceTest3();
+        test3.list = test.list;
+
+        test3.list[2] = 999;
+        
+        test.Print();
     }
 }

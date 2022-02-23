@@ -22,7 +22,16 @@ namespace CSharpLab
             // Inherit.InheritTest.Run();
 
             // LoopTest.Run();
-            ReferneceTest2.Run();
+            // ReferneceTest2.Run();
+            // Test.FormatTest.Run();
+            // ReflectionTest.Run();
+
+            // System.Console.WriteLine(float.Parse("1.2"));
+
+            // ReferenceTest.Run();
+            // ReferneceTest1.Run1();
+            // ReferneceTest2.Run();
+            ReferneceTest3.Run();
         }
 
 

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -8,7 +9,7 @@ public class ZIPTest : MonoBehaviour
     void Start()
     {
         sourePath = Application.dataPath + @"/Tools/ZIPTool/ziptest/zip.txt";
-        outPath=Application.persistentDataPath+@"/txttest.zip";
+        outPath = Application.persistentDataPath + @"/txttest.zip";
     }
     void OnGUI()
     {
@@ -24,19 +25,23 @@ public class ZIPTest : MonoBehaviour
     }
 
     [MenuItem("Tool/ZipTest")]
-    static void CompressDirectoryTest(){
-         ZIPTool.CompressDirectory(Application.dataPath + @"/Tools/ZIPTool/ziptest/zip.txt", Application.persistentDataPath+@"/txttest.zip");
+    static void CompressDirectoryTest()
+    {
+        ZIPTool.CompressDirectory(Application.dataPath + @"/Tools/ZIPTool/ziptest/zip.txt", Application.persistentDataPath + @"/txttest.zip");
 
     }
-     [MenuItem("Tool/CreatePackZip")]
-    static void CreatePackZip(){
-        ZIPTool.PackFiles("tt.zip",Application.dataPath + @"/Tools/ZIPTool/ziptest/zip.txt","");
+    [MenuItem("Tool/CreatePackZip")]
+    static void CreatePackZip()
+    {
+        ZIPTool.PackFiles("tt.zip", Application.dataPath + @"/Tools/ZIPTool/ziptest/zip.txt", "");
     }
 
-     [MenuItem("Tool/CompressFiles")]
-    static void CompressFiles(){
-        var files= new List<string>();
-        files.Add(Application.dataPath +@"/Tools/ZIPTool/ziptest/zip.txt");
-        ZIPTool.CompressFiles(files,"",Application.dataPath + @"/Tools/ZIPTool/ziptest",0);
+    [MenuItem("Tool/CompressFiles")]
+    static void CompressFiles()
+    {
+        var files = new List<string>();
+        files.Add(Application.dataPath + @"/Tools/ZIPTool/ziptest/zip.txt");
+        ZIPTool.CompressFiles(files, "", Application.dataPath + @"/Tools/ZIPTool/ziptest", 0);
     }
 }
+#endif

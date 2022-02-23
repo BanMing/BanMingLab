@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,3 +81,4 @@ public class SVNTool
         return EditorUtility.OpenFilePanel("Select TortoiseProc.exe", "c:\\", "exe");
     }
 }
+# endif

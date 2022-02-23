@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class IteationTest : MonoBehaviour
                 //b = _testStructList[i].a;
             }
             UnityEngine.Profiling.Profiler.EndSample();
+
             UnityEditor.EditorApplication.isPaused = true;
         }
 
@@ -73,3 +75,4 @@ public class IteationTest : MonoBehaviour
         }
     }
 }
+#endif
