@@ -2,6 +2,26 @@ using System;
 using System.Collections.Generic;
 namespace Test
 {
+    struct StringTestStruct
+    {
+        int id;
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+    }
+    public class StringTest
+    {
+        public static void Run()
+        {
+            StringTestStruct structTest = new StringTestStruct();
+            object structTestObj = (object)structTest;
+            // System.InvalidCastException: Unable to cast object of type 'Test.StringTestStruct' to type 'System.String'. 
+            string a = structTestObj as string;
+            Console.WriteLine(a);
+        }
+    }
     public class FormatTest
     {
         private void SpaceFormat()

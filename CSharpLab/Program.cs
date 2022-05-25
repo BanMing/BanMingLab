@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CSharpLab
 {
@@ -31,7 +32,22 @@ namespace CSharpLab
             // ReferenceTest.Run();
             // ReferneceTest1.Run1();
             // ReferneceTest2.Run();
-            ReferneceTest3.Run();
+            // ReferneceTest3.Run();
+
+            // Test.StringTest.Run();
+            List<int> test = new List<int>() { 1, 2, 3, 4, 5 };
+            for (int i = 0; i < test.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    test.RemoveAt(i);
+                }
+            }
+
+            for (int i = 0; i < test.Count; i++)
+            {
+                Console.WriteLine(test[i]);
+            }
         }
 
 
